@@ -1,0 +1,6 @@
+[
+    { "id": 1, "type": "Receita", "value": 1000 },
+    { "id": 2, "type": "Despesa", "value": -500 },
+    { "id": 3, "type": "Receita", "value": 2000 },
+    { "id": 4, "type": "Despesa", "value": -1000 }
+  ]  
