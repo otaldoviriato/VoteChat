@@ -14,23 +14,21 @@ const LoginComponent = () => {
  
 
   const handleLogin = async () => {  
-    const response = await fetch('http://192.168.100.2:8080/login/', {
+    const response = await fetch('http://192.168.100.5:3000/api/login/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        login: email,
+        email: email,
         senha: password,
       }),
     });
 
-    const apiResponse = await response.json();
+    console.log(await response.json());
 
-    console.log(apiResponse);
-
-    if (apiResponse == true){
+    if (response == true){
       setAuth(true);
     }else{ 
       setAuth(false);

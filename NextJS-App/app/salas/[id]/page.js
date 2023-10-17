@@ -34,7 +34,7 @@ export default async function Sala({ params }) {
             }
         });
         return Promise.all(promises);
-    }  
+    }
 
     const dataM = await someFunction()
 

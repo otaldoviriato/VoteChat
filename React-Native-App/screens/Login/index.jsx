@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import LoginComponent from './components/login-form';
+import SignInComponent from './components/register-form';
 
 
 const LoginScreenComponent = () => {
@@ -56,7 +57,7 @@ const LoginScreenComponent = () => {
         {activeTab === 'login' ? (
           <LoginComponent />
         ) : (
-          <Text style={styles.contentText}>Conteúdo da Tab de Cadastro</Text>
+          <SignInComponent />
         )}
       </View>
     </View>

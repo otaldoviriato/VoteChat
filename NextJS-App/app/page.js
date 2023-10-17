@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -14,25 +13,57 @@ export default function Home() {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+
+    if (!email || !senha) {
+      setError("Preencha todos os campos")
+      return
+    }
 
     try {
-      const res = await signIn("credentials", {
+      console.log()
+      const res = await signIn(
         email,
-        senha,
-        redirect: false,
-      });
+        senha
+      )
+      console.log(res)
 
-      if (res.error) {
-        setError("Email e/ou Senha incorreto(s)");
-        return;
+      if (res.status=='404') {
+        setError("Email não encontrado")
+        return
       }
 
-      router.replace("mainPage");
+      if (res.status=='401') {
+        setError("Senha incorreta")
+        return
+      }
+
+
+      router.replace("mainPage")
     } catch (error) {
-      console.log(error);
     }
   };
+
+  async function signIn(email, senha) {
+    try {
+      const resposta = await fetch('api/login/', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          senha: senha,
+        }),
+      })
+
+      return resposta
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
