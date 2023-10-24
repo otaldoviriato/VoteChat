@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
+import { UserContext } from '../../Providers'
 
 export default function UploadForm() {
   const [file, setFile] = useState()
   const [image, setImage] = useState('download.png')
+  const { user } = useContext(UserContext);
 
   const inputFile = useRef(null)
   const onButtonClick = () => {
@@ -30,7 +32,8 @@ export default function UploadForm() {
 
         const res = await fetch('/api/upload', {
           method: 'POST',
-          body: data
+          body: data,
+          data: user,
         })
         if (res.ok) {
           setTimeout(() => {

@@ -1,9 +1,17 @@
 'use client'
- 
-import { createContext } from 'react'
- 
-export const ThemeContext = createContext({})
- 
-export default function ThemeProvider({ children }) {
-  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
-}
+
+import React, { createContext, useContext, useState } from 'react';
+
+export const UserContext = createContext();
+
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState();
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export default UserProvider

@@ -1,6 +1,5 @@
 import GetSession from "../components/GetSession/getSession"
 import UploadImagem from "../components/uploadImagem/uploadImagem.js"
-import ListFotos from "../components/listFotos/listFotos"
 import SignOutButton from "../components/signOutButton/signOutButton"
 import Link from "next/link"
 
@@ -13,7 +12,7 @@ export default function UserInfo() {
         <SignOutButton />
         <GetSession />
         <UploadImagem />
-        <ListFotos />
+
       </div>
     </div>
   )

@@ -1,7 +1,8 @@
 import Link from 'next/link'
-
+import React from 'react';
 
 export default async function UserInfo() {
+
     return (
         <>
             <section className="bg-indigo-700 text-center text-indigo-600">
@@ -11,7 +12,7 @@ export default async function UserInfo() {
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-indigo-600 md:text-2xl dark:text-white">
                                 Bem Vindo à Página Principal
                             </h1>
-                            
+                
                             <Link href="/paginaUsuario" type="submit" className="w-full text-white bg-indigo-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Perfil</Link>
                             <Link href="/criarSala" type="submit" className="w-100px text-white bg-indigo-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">&#10010; Criar Sala</Link>
                         </div>

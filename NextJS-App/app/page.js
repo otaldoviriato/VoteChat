@@ -1,10 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useRouter } from "next/navigation";
+import { UserContext } from './Providers'
 
 export default function Home() {
+
+  const { setUser, user } = useContext(UserContext);
 
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -21,12 +24,11 @@ export default function Home() {
     }
 
     try {
-      console.log()
       const res = await signIn(
         email,
         senha
       )
-      console.log(res)
+
 
       if (res.status=='404') {
         setError("Email não encontrado")
@@ -38,11 +40,17 @@ export default function Home() {
         return
       }
 
+      if (res.status=='200') {
+        const userData = await res.json()
+        setUser(userData.data)
 
-      router.replace("mainPage")
+        router.replace("mainPage")
+        return 
+      }
+
     } catch (error) {
     }
-  };
+  }
 
   async function signIn(email, senha) {
     try {

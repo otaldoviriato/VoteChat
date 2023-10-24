@@ -1,15 +1,9 @@
 import { writeFile } from 'fs/promises'
-import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
-import { authOptions } from '../auth/[...nextauth]/route'
 import { connectMongoDB } from '../../../lib/mongodb'
 import Fotos from "../../../models/fotos";
 
-
-
 export async function POST(request) {
-  const session = await getServerSession(authOptions)
-  const id = session?.user?.id
 
   const data = await request.formData()
   const file = data.get('file')

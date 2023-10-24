@@ -1,16 +1,18 @@
+'use client'
 
-import React from 'react';
-
+import React from 'react'
+import { useContext } from 'react'
+import {UserContext} from '../../Providers'
 
 export default async function GetSession() {
-
+  const { user } = useContext(UserContext)
 
   return <div>
     <div>
-          Nome: <span className="font-bold"></span>
+          Nome: {user?.name} <span className="font-bold"></span>
         </div>
         <div>
-          Email: <span className="font-bold"></span>
+          Email: {user?.email} <span className="font-bold"></span>
         </div>
     
   </div>
