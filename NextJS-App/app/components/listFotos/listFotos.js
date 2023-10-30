@@ -1,34 +1,45 @@
+'use client'
+
 import React from 'react'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../../api/auth/[...nextauth]/route'
-import { connectMongoDB } from '../../../lib/mongodb';
-import Fotos from '../../../models/fotos';
+import { useContext, useState, useEffect } from 'react'
+import { UserContext } from '../../Providers'
 
-async function getFotos() {
-  const session = await getServerSession(authOptions)
-  const id = session?.user?.id
-  try {
-    await connectMongoDB()
-    const fotosUsuario = await Fotos.find({ user: id, active: true }).exec()
-    return fotosUsuario
-  } catch (error) {
-    console.log(error)
-    return error;
-  }
-}
+export default function ListFotos() {
+  const { user } = useContext(UserContext)
+  const id = user?._id
+  const [data, setData] = useState([])
 
-export default async function ListFotos() {
-  const data = await getFotos()
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("../api/getFotos", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id
+          }),
+        });
+        const fotosData = await res.json()
+        setData(fotosData)
+      } catch (error) {
+        console.log('error listing salas', error)
+      }
+    }
+    fetchData()
+  }, [id])
+
   return (<>
-          {
-            data.map((foto) => {
-              return (
-                <div key={foto.path}>
-                  <img src={foto.path} />
-                </div>
-              )
-            })
-          }
+    {
+      data.map((foto) => {
+        return (
+          <div key={foto.path}>
+            <img src={foto.path} />
+          </div>
+        )
+      })
+    }
   </>
   )
 }

@@ -6,6 +6,7 @@ import Fotos from "../../../models/fotos";
 export async function POST(request) {
 
   const data = await request.formData()
+  const id  = data.get('id')
   const file = data.get('file')
   if (!file) {
     return NextResponse.json({ success: false })

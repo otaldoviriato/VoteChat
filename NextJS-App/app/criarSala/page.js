@@ -1,13 +1,17 @@
 'use client'
 
-import React, { useState } from 'react';
+import {UserContext} from '../Providers'
+import React, { useState, useContext } from 'react';
 import { useRouter } from "next/navigation";
 
 
 export default function criarSala() {
 
+    const { user } = useContext(UserContext)
     const [name, setName] = useState('')
     const [error, setError] = useState('')
+
+    const id = user?._id
 
     const router = useRouter()
 
@@ -28,7 +32,8 @@ export default function criarSala() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name
+                    name,
+                    id
                 }),
             })
             

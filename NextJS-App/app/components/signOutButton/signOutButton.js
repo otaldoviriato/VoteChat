@@ -1,12 +1,23 @@
 'use client'
 
-import React from 'react';
-import { signOut } from "next-auth/react"
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
 
-// import { Container } from './styles';
+export default function Logout() {
+  const router = useRouter()
 
-export default function signOutButton() {
-  return <button onClick={() => signOut()} type="submit" className="w-full text-white bg-indigo-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-  Sair
-</button>;
+  const handleLogout = () => {
+    // Remove o cookie de autenticação (ou qualquer outro token de autenticação) aqui
+    Cookies.remove('authToken') // Substitua 'authToken' pelo nome do seu cookie de autenticação
+
+    // Redirecione para a página de login ou outra página desejada
+    router.push('/login') // Substitua '/login' pelo caminho da página de login
+  };
+
+  return (
+    <div>
+      <h1>Seu conteúdo protegido</h1>
+      <button onClick={handleLogout}>Sair</button>
+    </div>
+  )
 }

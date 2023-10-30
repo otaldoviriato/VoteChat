@@ -6,7 +6,8 @@ import { UserContext } from '../../Providers'
 export default function UploadForm() {
   const [file, setFile] = useState()
   const [image, setImage] = useState('download.png')
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserContext)
+  const id = user?._id
 
   const inputFile = useRef(null)
   const onButtonClick = () => {
@@ -29,11 +30,11 @@ export default function UploadForm() {
       try {
         const data = new FormData()
         data.set('file', file)
+        data.set('id', id)
 
         const res = await fetch('/api/upload', {
           method: 'POST',
           body: data,
-          data: user,
         })
         if (res.ok) {
           setTimeout(() => {

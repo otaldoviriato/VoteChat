@@ -1,11 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import {UserContext} from '../../Providers'
+import React, { useState, useContext } from 'react';
 import Link from "next/link"
 
 export default function Entrar({ params }) {
+    const { user } = useContext(UserContext)
     const [mensagem, setMensagem] = useState('')
     const id_sala = params.id[0]
+    const id = user?._id
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -19,7 +22,8 @@ export default function Entrar({ params }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    id_sala
+                    id_sala,
+                    id
                 }),
             })
 
