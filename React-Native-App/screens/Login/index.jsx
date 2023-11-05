@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   activeTab: {
-    color: '#3117EB',
+    color: '#0062ae',
   },
   tabText: {
     fontWeight: 'bold',
@@ -93,10 +93,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     paddingVertical: 10,
     paddingHorizontal: 5,
+    color: '#595959',
+    borderColor: "#595959",
   },
   activeTabText: {
-    color: '#3117EB',
-    borderColor: "#3117EB",
+    color: '#0062ae',
+    borderColor: "#0062ae",
     borderBottomWidth: 3,
   },
   contentContainer: {
@@ -107,8 +109,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   tinyLogo: {
-    width: 120,
-    height: 160,
+    width: 130,
+    height: 130,
   },
 });
 

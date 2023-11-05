@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   buttonLogin: {
     marginTop: 20,
-    backgroundColor: "#3117EB",
+    backgroundColor: "#1C98F7",
     borderRadius: 50,
     padding: 12,
     flexDirection: 'row',
