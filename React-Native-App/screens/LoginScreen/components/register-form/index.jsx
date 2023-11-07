@@ -4,16 +4,15 @@ import { TextInput } from 'react-native-paper';
 import { AuthContext } from '../../../../context/authContext'
 
 
-
 const LoginComponent = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  const { setAuth } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext)
  
 
   const handleSignIn = async () => {  
-    const response = await fetch('http://192.168.100.5:3000/api/registrar/', {
+    const res = await fetch('http://192.168.100.7:3000/api/loginScreenAPI/register/', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -25,7 +24,13 @@ const LoginComponent = () => {
       }),
     })
 
-    console.log(await response.json())
+    const response = await res.json()
+
+    if (res.status == 200){
+      setUser(response.data)
+    }else{ 
+      setUser(null)
+    }
   }
 
   return (

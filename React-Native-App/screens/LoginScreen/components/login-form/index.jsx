@@ -4,37 +4,35 @@ import { CheckBox } from 'react-native-btr';
 import { TextInput } from 'react-native-paper';
 import { AuthContext } from '../../../../context/authContext'
 
-
-
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const { setAuth } = useContext(AuthContext);
+  const [rememberMe, setRememberMe] = useState(false)
+  const { setUser } = useContext(AuthContext)
  
 
   const handleLogin = async () => {  
-    const response = await fetch('http://192.168.100.5:3000/api/login/', {
+    const res = await fetch('http://192.168.100.2:3000/api/loginScreenAPI/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: email,
+        email: email.toLowerCase().trim(),
         senha: password,
       }),
-    });
+    })
 
-    console.log(await response.json());
+    const response = await res.json()
 
-    if (response == true){
-      setAuth(true);
+    if (res.status == 200){
+      setUser(response.data)
     }else{ 
-      setAuth(false);
+      setUser(null)
     }
     
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -68,8 +66,8 @@ const LoginComponent = () => {
         <Text style={styles.textButtonLogin}>Login</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -112,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginComponent;
+export default LoginComponent

@@ -1,18 +1,20 @@
-import { View, StyleSheet } from 'react-native';
-import  FinancialDataList  from './components/listas'
+import { View, StyleSheet } from 'react-native'
+import RoomsList from './components/RoomsList'
 
 export default function App() {
-  
+
   return (
+  <>
     <View style={styles.container}>
-        <FinancialDataList />
+      <RoomsList />
     </View>
-  );
+  </>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:50,
+    marginTop: 50,
   },
-});
+})

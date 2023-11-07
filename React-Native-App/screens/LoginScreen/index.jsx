@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import LoginComponent from './components/login-form';
-import SignInComponent from './components/register-form';
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import LoginComponent from './components/login-form'
+import SignInComponent from './components/register-form'
 
 
 const LoginScreenComponent = () => {
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState('login')
 
   const handleTabPress = (tab) => {
-    setActiveTab(tab);
-  };
+    setActiveTab(tab)
+  }
 
   return (
     <View style={styles.container}>
@@ -20,6 +20,7 @@ const LoginScreenComponent = () => {
             />
         </View>
       <View style={styles.tabsContainer}>
+
         <TouchableOpacity
           style={[
             styles.tab,
@@ -36,6 +37,7 @@ const LoginScreenComponent = () => {
             Login
           </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={[
             styles.tab,
@@ -53,6 +55,8 @@ const LoginScreenComponent = () => {
           </Text>
         </TouchableOpacity>
       </View>
+
+
       <View style={styles.contentContainer}>
         {activeTab === 'login' ? (
           <LoginComponent />
@@ -61,8 +65,8 @@ const LoginScreenComponent = () => {
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
