@@ -20,9 +20,11 @@ export async function POST(req) {
         // Comparar a senha inserida com a senha armazenada no banco de dados
         if (await bcrypt.compare(senha, user.senha)) {
             return NextResponse.json(
-                { message: "Autenticação bem-sucedida." ,
-                data: user,
-                 status: 200 }
+                {
+                    message: "Autenticação bem-sucedida.",
+                    data: user,
+                    status: 200
+                }
             )
         } else {
             return NextResponse.json(

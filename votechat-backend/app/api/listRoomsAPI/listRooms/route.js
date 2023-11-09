@@ -7,7 +7,6 @@ export async function POST(req) {
         const { id } = await req.json()
         await connectMongoDB()
         const salasUsuario = await Salas.find({ 'members.id_user': id }).exec()
-        console.log(salasUsuario)
         return NextResponse.json(salasUsuario)
     } catch (error) {
         console.log(error)

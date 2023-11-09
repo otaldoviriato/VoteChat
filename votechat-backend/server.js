@@ -22,20 +22,20 @@ app.prepare().then(() => {
 
     socket.on('message', async (data) => {
       try {
-        const salaId = data.id_sala
+
+        const id_sala = data.id_sala
         const mensagemToDB = {
           conteudo: data.message,
           remetente: data.id_user,
         }
 
-        // Encontra a sala pelo ID e adiciona a mensagem à coleção
         const Salas = require('./models/salas')
         const sala = await Salas.findByIdAndUpdate(
-          salaId,
+          id_sala,
           { $push: { mensagens: mensagemToDB } },
           { new: true }
         )
-  
+
         if (!sala) {
           console.error('Sala não encontrada')
           return
@@ -48,11 +48,14 @@ app.prepare().then(() => {
           id: usuario._id,
           name: usuario.name,
           path: usuario.fotoPerfil,
-          data: data.message, // Substitua por uma referência ao remetente
+          data: data.message,
         }
-  
+
+        console.log(mensagemToUsers)
+
         // Emita a mensagem para todos os clientes na sala
-        io.to(salaId).emit('message', mensagemToUsers)
+        io.to(id_sala).emit('message', mensagemToUsers)
+
       } catch (error) {
         console.error('Erro ao salvar mensagem:', error)
       }
@@ -60,7 +63,7 @@ app.prepare().then(() => {
 
     socket.on('join_room', (data) => {
       socket.join(data)
-      console.log(`user joined to room: ${data}` )
+      console.log(`user joined to room: ${data}`)
     })
 
     socket.on('disconnect', () => {

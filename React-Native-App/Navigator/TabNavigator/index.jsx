@@ -10,7 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ListRoomsScreen from '../../screens/ListRoomsScreen';
 import SecondScreen from '../../screens/SecondScreen';
 import ThirdScreen from '../../screens/ThirdScreen';
-import RoomDetails from '../../screens/ListRoomsScreen/components/RoomDetails';
+import RoomDetailsScreen from '../../screens/RoomDetailsScreen';
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -44,10 +44,10 @@ function TabNavigatorComponent() {
     return (
       <Stack.Navigator>
         <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{title: 'Minhas Salas'}} />
-        <Stack.Screen name="DetalhesDaSala" component={RoomDetails} options={{title: 'Grupo X'}} />
+        <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{title: 'Grupo X'}} />
         {/* Adicione outras telas que deseja navegar aqui, se necessário */}
       </Stack.Navigator>
-    );
+    )
   }
 
   return (

@@ -11,18 +11,18 @@ const ContainerView = styled.View`
   width: 100%;
 `
 
-const Item = ({ RoomName, RoomId }) => {
+const Item = ({ data }) => {
   const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
 
   const handlePress = () => {
     // Navegue para a tela desejada quando o item for pressionado
-    navigation.navigate('DetalhesDaSala', { RoomName, RoomId })
+    navigation.navigate('DetalhesDaSala', { data })
   }
 
   return (
     <TouchableOpacity onPress={handlePress}>
       <ContainerView>
-        <Text>{RoomName}</Text>
+        <Text>{data.name}</Text>
       </ContainerView>
     </TouchableOpacity>
   )
@@ -63,7 +63,7 @@ function RoomsList() {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={roomdata}
-        renderItem={({ item }) => <Item RoomName={item.name} RoomId={item._id} />}
+        renderItem={({ item }) => <Item data={item} />}
         keyExtractor={(item, index) => index.toString()}
         numColumns={numColumns}
         key={numColumns}
