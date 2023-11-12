@@ -9,7 +9,40 @@ const mensagemSchema = new Schema(
   { timestamps: true }
 );
 
-const userSchema = new Schema(
+const pendentesSchema = new Schema(
+{
+  type: new mongoose.Schema(
+    {
+      pedidoEm: { type: Date, required: true },
+      id_user: { type: Schema.Types.ObjectId, ref: 'User' },
+      votos: [
+        {
+          type: new mongoose.Schema({
+            favoravel: { type: Boolean, required: true },
+            id_user: { type: Schema.Types.ObjectId, ref: 'User' },
+          },
+            { timestamps: true }
+          ),
+        },
+      ],
+      dados: [
+        {
+            type: new mongoose.Schema({
+            type: { type: String, required: true },
+            label: { type: String, required: true },
+            value: {type: String, required: true }
+          },
+            { timestamps: true }
+          ),
+        },
+      ],
+    },
+    { timestamps: true }
+  ),
+}
+);
+
+const salaSchema = new Schema(
   {
     name: { type: String, required: true },
     members: [
@@ -18,30 +51,10 @@ const userSchema = new Schema(
       },
     ],
     mensagens: [mensagemSchema],
-    pendentes: [
-      {
-        type: new mongoose.Schema(
-          {
-            pedidoEm: { type: Date, required: true },
-            id_user: { type: Schema.Types.ObjectId, ref: 'User' },
-            votos: [
-              {
-                type: new mongoose.Schema({
-                  favoravel: { type: Boolean, required: true },
-                  id_user: { type: Schema.Types.ObjectId, ref: 'User' },
-                },
-                  { timestamps: true }
-                ),
-              },
-            ],
-          },
-          { timestamps: true }
-        ),
-      },
-    ],
+    pendentes: [pendentesSchema],
   },
   { timestamps: true }
 );
 
-const Salas = models.Salas || mongoose.model('Salas', userSchema);
+const Salas = models.Salas || mongoose.model('Salas', salaSchema);
 module.exports = Salas;

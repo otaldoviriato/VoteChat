@@ -41,17 +41,17 @@ app.prepare().then(() => {
           return
         }
 
+        
+
         const User = require('./models/user'); // Suponha que você tenha um modelo de usuário
         const usuario = await User.findById(data.id_user);
 
         const mensagemToUsers = {
-          id: usuario._id,
+          _id: sala.mensagens[sala.mensagens.length - 1]._id,
           name: usuario.name,
           path: usuario.fotoPerfil,
           data: data.message,
         }
-
-        console.log(mensagemToUsers)
 
         // Emita a mensagem para todos os clientes na sala
         io.to(id_sala).emit('message', mensagemToUsers)

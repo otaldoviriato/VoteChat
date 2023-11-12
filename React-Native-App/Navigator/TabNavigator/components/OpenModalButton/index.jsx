@@ -1,28 +1,25 @@
-import { useState, React } from 'react';
+import { useState, React, useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Entypo } from '@expo/vector-icons';
-import ModalComponent from '../Modals';
+import { AuthContext } from '../../../../context/authContext'
 
 const OpenModalButton = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const { setUser } = useContext(AuthContext)
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+  async function deslogar () {
+    await AsyncStorage.removeItem('user1')
+    setUser(null)
+  }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={openModal} style={styles.button}>
+      <TouchableOpacity onPress={deslogar} style={styles.button}>
         <Entypo name="plus" size={42} color="white" />
       </TouchableOpacity>
-      <ModalComponent showModal={modalVisible} closeModal={closeModal} />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   button: {

@@ -31,6 +31,7 @@ const Item = ({ data }) => {
 function RoomsList() {
   const { user } = useContext(AuthContext)
   const id = user?._id
+  
   const [roomdata, setRoomData] = useState([])
   const [numColumns, setNumColumns] = useState(1); // Inicialize com 1 coluna
 

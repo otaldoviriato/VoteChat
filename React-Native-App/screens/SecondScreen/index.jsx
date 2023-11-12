@@ -1,19 +1,22 @@
-import  PieChartComponent  from './components/graficos';
-import { StyleSheet, View } from 'react-native';
+import { View, StyleSheet, Platform, StatusBar } from 'react-native'
+import React from 'react'
+import EnterRoom from './components/enterRoom/enterRoom'
+
 
 export default function App() {
-  
+
   return (
-    <View style={styles.container}>
-      <PieChartComponent />
+    <View style={styles.container} >
+      <EnterRoom />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-});
+    backgroundColor: "white",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+  }
+})

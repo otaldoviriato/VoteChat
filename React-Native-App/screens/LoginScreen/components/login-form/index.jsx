@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { CheckBox } from 'react-native-btr';
-import { TextInput } from 'react-native-paper';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { CheckBox } from 'react-native-btr'
+import { TextInput } from 'react-native-paper'
 import { AuthContext } from '../../../../context/authContext'
 
 const LoginComponent = () => {
@@ -28,6 +29,7 @@ const LoginComponent = () => {
 
     if (res.status == 200){
       setUser(response.data)
+      await AsyncStorage.setItem('user1', JSON.stringify(response.data))
     }else{ 
       setUser(null)
     }

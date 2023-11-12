@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useContext } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import { AuthContext } from '../../../../context/authContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const LoginComponent = () => {
@@ -12,7 +13,7 @@ const LoginComponent = () => {
  
 
   const handleSignIn = async () => {  
-    const res = await fetch('http://192.168.100.7:3000/api/loginScreenAPI/register/', {
+    const res = await fetch('http://192.168.100.2:3000/api/loginScreenAPI/register/', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -28,6 +29,7 @@ const LoginComponent = () => {
 
     if (res.status == 200){
       setUser(response.data)
+      await AsyncStorage.setItem('user1', JSON.stringify(response.data))
     }else{ 
       setUser(null)
     }
