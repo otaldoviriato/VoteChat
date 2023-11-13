@@ -1,32 +1,70 @@
-import React, { useContext, useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { AuthContext } from '../context/authContext'
+import React, { useEffect } from 'react'
+import { BackHandler, Alert } from 'react-native'
+import NewRoomButton from './components/NewRoomButton'
+import { NavigationContainer } from '@react-navigation/native'
+import { MaterialIcons } from '@expo/vector-icons'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Importe os componentes de tela que você deseja navegar
-import LoginScreenComponent from '../screens/LoginScreen/'
-import TabNavigatorComponent from './TabNavigator'
+import ListRoomsScreen from '../screens/ListRoomsScreen'
+import RoomDetailsScreen from '../screens/RoomDetailsScreen'
+import ListPendingScreen from '../screens/ListPendingScreen'
 
-function Nav() {
-  const { setUser, user } = useContext(AuthContext)
+
+const Tab = createMaterialTopTabNavigator();
+
+function NavigatorComponent() {
 
   useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Fechar o aplicativo', 'Tem certeza que deseja fechar o aplicativo?', [
+        {
+          text: 'Cancelar',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: 'Sim', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
 
-    const fetchData = async () => {
-      const data = await checkUserExists()
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
 
-      if(data){
-        setUser(JSON.parse(data))
-      }
-    }
-  
-    fetchData()  
-  }, [])
+    return () => backHandler.remove();
+  }, []);
 
-  const checkUserExists = async () => {
-    return await AsyncStorage.getItem('user1')
+  const Stack = createNativeStackNavigator();
+
+  function StackNaigator() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{title: 'Minhas Salas'}} />
+        <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{title: 'Grupo X'}} />
+        <Stack.Screen name="ListaDePendentes" component={ListPendingScreen} options={{title: 'Pendentes'}} />
+        {/* Adicione outras telas que deseja navegar aqui, se necessário */}
+      </Stack.Navigator>
+    )
   }
 
-  return user ? <TabNavigatorComponent /> : <LoginScreenComponent />
+  return (
+    <NavigationContainer independent={true}>
+      <StackNaigator />
+      {/*<Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
+
+         <Tab.Screen name="Grupos" component={RoomsStack} options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="home" size={24} color={color} />
+          )
+        }} /> 
+
+      </Tab.Navigator>*/}
+      <NewRoomButton />
+    </NavigationContainer>
+  )
 }
 
-export default Nav
+export default NavigatorComponent;

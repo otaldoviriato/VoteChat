@@ -2,9 +2,9 @@ import { useState, React, useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Entypo } from '@expo/vector-icons';
-import { AuthContext } from '../../../../context/authContext'
+import { AuthContext } from '../../../context/authContext'
 
-const OpenModalButton = () => {
+const NewRoomButton = () => {
   const { setUser } = useContext(AuthContext)
 
   async function deslogar () {
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OpenModalButton;
+export default NewRoomButton;
