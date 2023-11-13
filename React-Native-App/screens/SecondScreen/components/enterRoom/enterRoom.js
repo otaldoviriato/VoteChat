@@ -13,7 +13,7 @@ export default function EnterRoom() {
 
         try {
 
-            const res = await fetch("http://192.168.100.2:3000/api/ScreenAPI/enterRoom", {
+            const res = await fetch("http://192.168.100.5:3000/api/ScreenAPI/enterRoom", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -24,14 +24,21 @@ export default function EnterRoom() {
                 }),
             })
 
-            if (res.ok) {
-                setMensagem("Solicitação enviada!")
-                setIdSala("")
-            } else {
-                console.log("User registration failed.")
+            if (res.status == 201){
+                setName('')
+            } 
+            else if (res.status == 400){
+                console.log('sala não encontrada')
             }
+            else if (res.status == 401){
+                setMensagem('usuário já é membro ou está pendente na sala')
+                console.log('usuário já é membro ou está pendente na sala')
+            }else {
+                console.log("Registro do usuário falhou.", JSON.stringify(res))
+            }
+
         } catch (error) {
-            console.log('error during registraion')
+            console.error('Erro durante a entrada na sala:', error)
         }
 
     }

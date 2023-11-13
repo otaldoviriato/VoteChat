@@ -13,7 +13,7 @@ const LoginComponent = () => {
  
 
   const handleSignIn = async () => {  
-    const res = await fetch('http://192.168.100.2:3000/api/loginScreenAPI/register/', {
+    const res = await fetch('http://192.168.100.5:3000/api/loginScreenAPI/register/', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

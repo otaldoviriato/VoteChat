@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import MessageDetails from '../messageDetails/messageDetails'
 import { AuthContext } from '../../../../context/authContext'
 
-const socket = io.connect("http://192.168.100.2:3000")
+const socket = io.connect("http://192.168.100.5:3000")
 
 const SocketComponent = (props) => {
   const [message, setMessage] = useState('')
@@ -67,7 +67,7 @@ const SocketComponent = (props) => {
   useEffect(() => {
     async function fetchData(remetentesUnicos) {
       try {
-        const res = await fetch("http://192.168.100.2:3000/api/roomDetailsAPI/getDataRemetentes", {
+        const res = await fetch("http://192.168.100.5:3000/api/roomDetailsAPI/getDataRemetentes", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

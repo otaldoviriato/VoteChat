@@ -9,7 +9,7 @@ const ModalComponent = ({ showModal, closeModal }) => {
 
   async function handlerSendData(){
 
-    await fetch('http://192.168.100.8:8080/inserirpatrimonio/', {
+    await fetch('http://192.168.100.5:8080/inserirpatrimonio/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

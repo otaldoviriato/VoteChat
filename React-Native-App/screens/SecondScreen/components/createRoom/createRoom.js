@@ -5,51 +5,54 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 
 export default function EnterRoom() {
     const { user } = useContext(AuthContext)
-    const [mensagem, setMensagem] = useState('')
-    const [idSala, setIdSala] = useState('')
+    const [name, setName] = useState('')
 
     const handleSubmit = async () => {
         console.log('ok')
+        const id = user?._id
+
+        if (!name) {
+            setError("Preencha todos os campos");
+            return
+        }
 
         try {
 
-            const res = await fetch("http://192.168.100.2:3000/api/ScreenAPI/enterRoom", {
+            const res = await fetch("http://192.168.100.5:3000/api/ScreenAPI/createRoom", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    id_sala: idSala,
-                    id_user: user?._id
+                    name,
+                    id
                 }),
             })
 
             if (res.ok) {
-                setMensagem("Solicitação enviada!")
-                setIdSala("")
+                setName('')
             } else {
-                console.log("User registration failed.")
+                console.log("Registro da sala falhou.");
             }
+
         } catch (error) {
             console.log('error during registraion')
         }
-
     }
 
     return (
         <>
             <View >
-                <Text>{mensagem}</Text>
                 <TextInput
                     placeholder="Digite o nome da sala"
-                    label="id_sala"
-                    value={idSala}
-                    onChangeText={setIdSala}
+                    label="name"
+                    value={name}
+                    onChangeText={setName}
                 />
                 <TouchableOpacity
                     onPress={handleSubmit}
                 >
-                    <Text >Entrar na Sala</Text>
+                    <Text >Criar Sala</Text>
                 </TouchableOpacity>
             </View>
         </>

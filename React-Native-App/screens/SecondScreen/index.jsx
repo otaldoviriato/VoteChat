@@ -1,5 +1,6 @@
 import { View, StyleSheet, Platform, StatusBar } from 'react-native'
 import React from 'react'
+import CreateRoom from './components/createRoom/createRoom'
 import EnterRoom from './components/enterRoom/enterRoom'
 
 
@@ -7,6 +8,7 @@ export default function App() {
 
   return (
     <View style={styles.container} >
+      <CreateRoom />
       <EnterRoom />
     </View>
   )

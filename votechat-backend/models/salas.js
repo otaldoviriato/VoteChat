@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema, models } = mongoose;
+const mongoose = require('mongoose')
+const { Schema, models } = mongoose
 
 const mensagemSchema = new Schema(
   {
@@ -7,13 +7,11 @@ const mensagemSchema = new Schema(
     remetente: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true }
-);
+)
 
 const pendentesSchema = new Schema(
 {
-  type: new mongoose.Schema(
-    {
-      pedidoEm: { type: Date, required: true },
+      pedidoEm: { type: Date, required: false },
       id_user: { type: Schema.Types.ObjectId, ref: 'User' },
       votos: [
         {
@@ -37,10 +35,8 @@ const pendentesSchema = new Schema(
         },
       ],
     },
-    { timestamps: true }
-  ),
-}
-);
+    { timestamps: true },
+)
 
 const salaSchema = new Schema(
   {

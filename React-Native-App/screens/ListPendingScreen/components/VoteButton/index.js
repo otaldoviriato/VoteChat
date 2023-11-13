@@ -9,7 +9,7 @@ export default function VoteButton({ salaId, userId }) {
     console.log('ok')
 
     try {
-      const res = await fetch("http://192.168.100.2:3000/api/listPendingScreenAPI/registerVote", {
+      const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/registerVote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

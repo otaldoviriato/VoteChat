@@ -21,7 +21,7 @@ export default function (props) {
     useEffect(() => {
         async function fetchData(Pendentes) {
             try {
-                const res = await fetch("http://192.168.100.2:3000/api/listPendingScreenAPI/getDataPendentes", {
+                const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/getDataPendentes", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
