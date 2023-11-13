@@ -4,7 +4,7 @@ import { AuthContext } from '../context/authContext'
 
 // Importe os componentes de tela que você deseja navegar
 import LoginScreenComponent from '../screens/LoginScreen/'
-import ListRoomsScreen from '../screens/ListRoomsScreen'
+import TabNavigatorComponent from './TabNavigator'
 
 function Nav() {
   const { setUser, user } = useContext(AuthContext)
@@ -26,7 +26,7 @@ function Nav() {
     return await AsyncStorage.getItem('user1')
   }
 
-  return user ? <ListRoomsScreen /> : <LoginScreenComponent />
+  return user ? <TabNavigatorComponent /> : <LoginScreenComponent />
 }
 
 export default Nav

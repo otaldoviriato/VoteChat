@@ -54,34 +54,16 @@ function TabNavigatorComponent() {
 
   return (
     <NavigationContainer independent={true}>
-      <Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
+      <RoomsStack />
+      {/*<Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
 
-        <Tab.Screen name="Second" component={SecondScreen} options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="list" size={24} color={color} />
-          ),
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          }
-        }} />
-
-        <Tab.Screen name="Grupos" component={RoomsStack} options={{
+         <Tab.Screen name="Grupos" component={RoomsStack} options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="home" size={24} color={color} />
           )
-        }} />
+        }} /> 
 
-        <Tab.Screen name="Third" component={ThirdScreen} options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="attach-money" size={24} color={color} />
-          )
-        }} />
-
-      </Tab.Navigator>
+      </Tab.Navigator>*/}
       <OpenModalButton />
     </NavigationContainer>
   )
