@@ -51,7 +51,6 @@ function RoomsList() {
             id
           }),
         })
-        console.log(RoomData)
         const RoomData = await res.json()
         setRoomData(RoomData)
       } catch (error) {
