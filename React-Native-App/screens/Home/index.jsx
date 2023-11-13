@@ -38,6 +38,6 @@ export default function ListRoomsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50,
+    backgroundColor: '#9AD1FB',
   },
 })

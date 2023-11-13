@@ -10,7 +10,16 @@ const Stack = createNativeStackNavigator()
 const StackNavigator = () => {
     return (
         <Stack.Navigator>
-          <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{title: 'Minhas Salas'}} />
+          <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{
+          title: 'Vote Chat',
+          headerStyle: {
+            backgroundColor: '#1B96F6',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}/>
           <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{title: 'Grupo X'}} />
           <Stack.Screen name="ListaDePendentes" component={ListPendingScreen} options={{title: 'Pendentes'}} />
           <Stack.Screen name="RequisitosDaSala" component={RoomRequirementsScreen} options={{title: 'Requisitos para entrar na Sala'}} />
