@@ -7,9 +7,9 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 // Importe os componentes de tela que você deseja navegar
-import ListRoomsScreen from '../screens/ListRoomsScreen'
-import RoomDetailsScreen from '../screens/RoomDetailsScreen'
-import ListPendingScreen from '../screens/ListPendingScreen'
+import ListRoomsScreen from '../screens/Home'
+import RoomDetailsScreen from '../screens/RoomDetails'
+import ListPendingScreen from '../screens/Pending'
 
 
 const Tab = createMaterialTopTabNavigator();
