@@ -3,8 +3,10 @@ import Salas from "../../../../models/salas"
 import { NextResponse } from "next/server"
 
 export async function POST(req) {
+    let votedUser
+
   try {
-    const { id_sala, id_votado, voto, id_votante } = await req.json()
+    const { id_sala, id_votado } = await req.json()
     await connectMongoDB()
 
     // Procurar a sala pelo id_sala
@@ -21,17 +23,24 @@ export async function POST(req) {
       return NextResponse.json({ message: "Usuário não encontrado na lista de pendentes", success: false })
     }
 
-    // Adicionar o voto favorável no array votos do objeto encontrado
-    pendenteEncontrado.votos.push({
-      favoravel: voto,
-      id_user: id_votante,
-    })
+    // Contar a quantidade de votos "true" e "false"
+    const countVotes = pendenteEncontrado.votos.length
+    const countTrue = pendenteEncontrado.votos.filter(v => v.favoravel === true).length
+    const countFalse = pendenteEncontrado.votos.filter(v => v.favoravel === false).length
+    const countMembers = sala.members.length
+    const percentageTrue = (countTrue / (countTrue + countFalse)) * 100
+    console.log(countMembers)
 
-    // Salvar as alterações no banco de dados
-    const updatedSala = await sala.save()
+    if (countMembers == countVotes && percentageTrue > 80) {
+        // Se countTrue for maior que countFalse, mover o usuário de pendentes para members
+        const index = sala.pendentes.findIndex((pendente) => pendente.id_user.toString() === id_votado.toString())
+        const votedUser = sala.pendentes.splice(index, 1)[0]
+        sala.members.push(votedUser)
+        await sala.save()
+      }
 
-    return NextResponse.json(updatedSala)
-  } catch (error) {
+      return NextResponse.json({ votedUser })
+    } catch (error) {
     console.log(error)
     return NextResponse.json({ message: error.message, success: false })
   }

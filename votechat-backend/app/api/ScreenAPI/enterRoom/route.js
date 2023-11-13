@@ -15,7 +15,7 @@ export async function POST(req) {
     }
 
     // Verificar se o usuário já foi encontrado em membros ou pendentes
-    const membroEncontrado = sala.membros && sala.membros.find(member => member.id_user.toString() === id_user.toString())
+    const membroEncontrado = sala.members && sala.members.find(member => member.id_user.toString() === id_user.toString())
     const pendenteEncontrado = sala.pendentes && sala.pendentes.find(pendente => pendente.id_user.toString() === id_user.toString())
 
     if (membroEncontrado || pendenteEncontrado) {

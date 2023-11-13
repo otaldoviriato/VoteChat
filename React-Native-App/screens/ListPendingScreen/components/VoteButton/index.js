@@ -6,7 +6,6 @@ export default function VoteButton({ salaId, userId }) {
   const { user } = useContext(AuthContext)
 
   const handleSubmit = async (voto) => {
-    console.log('ok')
 
     try {
       const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/registerVote", {
@@ -31,7 +30,26 @@ export default function VoteButton({ salaId, userId }) {
     } catch (error) {
       console.log('error during registration')
     }
-  };
+
+    try {
+      const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/checkVotes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_sala: salaId,
+          id_votado: userId
+        }),
+      })
+  
+      const data = await res.json();
+      console.log(data)
+  
+    } catch (error) {
+      console.log('error during registration')
+    }
+  }
 
   return (
     <>
