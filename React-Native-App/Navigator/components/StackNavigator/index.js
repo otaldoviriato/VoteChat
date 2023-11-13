@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ListRoomsScreen from '../../../screens/Home'
 import RoomDetailsScreen from '../../../screens/RoomDetails'
 import ListPendingScreen from '../../../screens/Pending'
-import RoomRequirementsScreen from '../../../screens/RoomRequirementsScreen'
+import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 
 const Stack = createNativeStackNavigator()
 

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
-import { View, StyleSheet, BackHandler, Alert } from 'react-native'
+import { View, StyleSheet, BackHandler, Alert, Button } from 'react-native'
 import RoomsList from './components/RoomsList'
 import NewRoomButton from './components/NewRoomButton'
+import { useNavigation } from '@react-navigation/native'
+import EnterRoom from './components/EnterRoom'
 
 export default function ListRoomsScreen() {
   useEffect(() => {
@@ -25,11 +27,19 @@ export default function ListRoomsScreen() {
     return () => backHandler.remove();
   }, []);
 
+  const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
+
+  const handlePress = () => {
+    // Navegue para a tela desejada quando o item for pressionado
+    navigation.navigate('RequisitosDaSala')}
+
   return (
   <>
     <View style={styles.container}>
       <RoomsList />
       <NewRoomButton />
+      <EnterRoom/>
+      <Button onPress={handlePress} title='ver requisitos'/>
     </View>
   </>
   )
