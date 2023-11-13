@@ -2,17 +2,8 @@ import React, { useEffect } from 'react'
 import { BackHandler, Alert } from 'react-native'
 import NewRoomButton from './components/NewRoomButton'
 import { NavigationContainer } from '@react-navigation/native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import StackNavigator from './components/StackNavigator'
 
-// Importe os componentes de tela que você deseja navegar
-import ListRoomsScreen from '../screens/Home'
-import RoomDetailsScreen from '../screens/RoomDetails'
-import ListPendingScreen from '../screens/Pending'
-
-
-const Tab = createMaterialTopTabNavigator();
 
 function NavigatorComponent() {
 
@@ -37,31 +28,11 @@ function NavigatorComponent() {
     return () => backHandler.remove();
   }, []);
 
-  const Stack = createNativeStackNavigator();
 
-  function StackNaigator() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{title: 'Minhas Salas'}} />
-        <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{title: 'Grupo X'}} />
-        <Stack.Screen name="ListaDePendentes" component={ListPendingScreen} options={{title: 'Pendentes'}} />
-        {/* Adicione outras telas que deseja navegar aqui, se necessário */}
-      </Stack.Navigator>
-    )
-  }
 
   return (
     <NavigationContainer independent={true}>
-      <StackNaigator />
-      {/*<Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
-
-         <Tab.Screen name="Grupos" component={RoomsStack} options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" size={24} color={color} />
-          )
-        }} /> 
-
-      </Tab.Navigator>*/}
+      <StackNavigator />
       <NewRoomButton />
     </NavigationContainer>
   )
