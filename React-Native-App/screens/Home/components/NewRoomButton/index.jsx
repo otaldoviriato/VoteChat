@@ -2,7 +2,7 @@ import { useState, React, useContext } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Entypo } from '@expo/vector-icons';
-import { AuthContext } from '../../../context/authContext'
+import { AuthContext } from '../../../../context/authContext'
 
 const NewRoomButton = () => {
   const { setUser } = useContext(AuthContext)
