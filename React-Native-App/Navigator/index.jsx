@@ -11,4 +11,4 @@ function NavigatorComponent() {
   )
 }
 
-export default NavigatorComponent;
+export default NavigatorComponent
