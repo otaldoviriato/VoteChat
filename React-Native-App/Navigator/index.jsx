@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
-import { BackHandler, Alert } from 'react-native'
-import NewRoomButton from './components/NewRoomButton'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
@@ -16,57 +14,8 @@ const Tab = createMaterialTopTabNavigator();
 
 function NavigatorComponent() {
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert('Fechar o aplicativo', 'Tem certeza que deseja fechar o aplicativo?', [
-        {
-          text: 'Cancelar',
-          onPress: () => null,
-          style: 'cancel',
-        },
-        { text: 'Sim', onPress: () => BackHandler.exitApp() },
-      ]);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
-
-  const Stack = createNativeStackNavigator();
-
-  function StackNaigator() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="ListaDeSalas" component={ListRoomsScreen} options={{title: 'Minhas Salas'}} />
-        <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{title: 'Grupo X'}} />
-        <Stack.Screen name="ListaDePendentes" component={ListPendingScreen} options={{title: 'Pendentes'}} />
-        {/* Adicione outras telas que deseja navegar aqui, se necessário */}
-      </Stack.Navigator>
-    )
-  }
-
   return (
-    <NavigationContainer linking={{
-      prefixes: ['exp://192.168.0.101:19000/--/myapp'],
-      config: {
-        screens: {
-          home: {
-            path: 'home',
-          },
-          entrarSala: {
-            path: 'RoomRequirementScreen/:id',
-            parse: {
-              id: id => id,
-            },
-          },
-        },
-      },
-    }} independent={true}>
+    <NavigationContainer independent={true}>
       <StackNaigator />
       {/*<Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
 

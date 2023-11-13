@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { AuthContext } from '../../../../context/authContext'
 
 // Importe os componentes de tela que você deseja navegar
-import LoginScreenComponent from '../..'
+import LoginScreenComponent from '../../../Login'
 import NavigatorComponent from '../../../../Navigator'
 
 function LoginLogic() {
