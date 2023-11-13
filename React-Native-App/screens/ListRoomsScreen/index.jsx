@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import RoomsList from './components/RoomsList'
 
-export default function App() {
+export default function Cardoso() {
 
   return (
   <>

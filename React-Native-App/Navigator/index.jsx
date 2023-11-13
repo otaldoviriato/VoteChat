@@ -51,7 +51,22 @@ function NavigatorComponent() {
   }
 
   return (
-    <NavigationContainer independent={true}>
+    <NavigationContainer linking={{
+      prefixes: ['exp://192.168.0.101:19000/--/myapp'],
+      config: {
+        screens: {
+          home: {
+            path: 'home',
+          },
+          entrarSala: {
+            path: 'RoomRequirementScreen/:id',
+            parse: {
+              id: id => id,
+            },
+          },
+        },
+      },
+    }} independent={true}>
       <StackNaigator />
       {/*<Tab.Navigator initialRouteName="Grupos" tabBarPosition="bottom">
 

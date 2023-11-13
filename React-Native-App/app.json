@@ -4,6 +4,7 @@
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "votechat",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -21,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.votechat"
     },
     "web": {
       "favicon": "./assets/favicon.png"
