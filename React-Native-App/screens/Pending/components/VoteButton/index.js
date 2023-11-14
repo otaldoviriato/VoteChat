@@ -8,7 +8,7 @@ export default function VoteButton({ salaId, userId }) {
   const handleSubmit = async (voto) => {
 
     try {
-      const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/registerVote", {
+      const res = await fetch("http://192.168.100.5:3000/api/pendingScreenAPI/registerVote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default function VoteButton({ salaId, userId }) {
     }
 
     try {
-      const res = await fetch("http://192.168.100.5:3000/api/listPendingScreenAPI/checkVotes", {
+      const res = await fetch("http://192.168.100.5:3000/api/pendingScreenAPI/checkVotes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

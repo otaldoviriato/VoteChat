@@ -4,7 +4,7 @@ import Salas from "../../../../models/salas"
 
 export async function POST(req) {
   try {
-    const { id_sala, id_user } = await req.json()
+    const { id_sala, id_user, pedidoEm } = await req.json()
     await connectMongoDB()
 
     // Procurar a sala pelo id_sala
@@ -25,12 +25,13 @@ export async function POST(req) {
     // Adicionar o usuário na lista de pendentes
     sala.pendentes.push({
       id_user: id_user,
+      pedidoEm: pedidoEm
     })
 
     // Salvar as alterações no banco de dados
     const updatedSala = await sala.save()
 
-    return NextResponse.json({ message: "Usuário adicionado em pendentes", success: true, status: 201 })
+    return NextResponse.json({ message: "Usuário adicionado em pendentes", success: true, status: 200 })
   } catch (error) {
     console.log(error)
     return NextResponse.json({ message: error.message, success: false })
