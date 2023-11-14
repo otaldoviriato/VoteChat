@@ -26,7 +26,7 @@ function LoginLogic() {
     return await AsyncStorage.getItem('user1')
   }
 
-  return user ? <NavigatorComponent /> : <LoginScreenComponent />
+  return <NavigatorComponent />
 }
 
 export default LoginLogic
