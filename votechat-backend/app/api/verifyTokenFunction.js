@@ -11,15 +11,15 @@ export default async function verifyToken(token) {
             const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
 
             // Retorna o valor decodificado do token
-            return decodedToken
+            return ({token: token, id: decodedToken})
         } else {
             await connectMongoDB
-            const createdUser = await User.create()
+            const createdUser = await User.create({})
             // Se o token não existe, crie um novo
-            const newUserToken = jwt.sign({ id_user: createdUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' })
+            const newUserToken = jwt.sign({ id_user: createdUser._id }, process.env.SECRET_KEY )
 
             // Retorna o novo token
-            return newUserToken
+            return ({token: newUserToken, id: createdUser._id})
         }
     } catch (error) {
         // Lidar com erros, por exemplo, token inválido

@@ -3,12 +3,14 @@ import Salas from "../../../../models/salas"
 import { NextResponse } from "next/server"
 
 export async function POST(req) {
-    const id = verifyToken(req.header.authorization)
+    const authorizationHeader = req.headers.get('authorization');
+
+    const res = verifyToken(authorizationHeader)
 
     try {
-        const { roomName, id, roomDescription } = await req.json()
+        const { roomName, roomDescription } = await req.json()
         await connectMongoDB()
-        const createdRoom = await Salas.create({ name: roomName, description: roomDescription, members: { id_user: id } })
+        const createdRoom = await Salas.create({ name: roomName, description: roomDescription, members: { id_user: res.id } })
         return NextResponse.json({ message: "Sala registrada.", data: createdRoom }, { status: 201 });
 
     } catch (error) {
