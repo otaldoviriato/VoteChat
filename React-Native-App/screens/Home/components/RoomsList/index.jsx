@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { SafeAreaView, View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import styled from 'styled-components/native'
 import { AuthContext } from '../../../../context/authContext'
 import { useNavigation } from '@react-navigation/native'
 
 const ContainerView = styled.View`
-  background-color: white;
+  background-color: gray;
   margin-bottom: 20px;
   min-height: 80px;
   width: 100%;
+  border-radius: 5px;
 `
 
 const Item = ({ data }) => {
@@ -23,6 +24,12 @@ const Item = ({ data }) => {
     <TouchableOpacity onPress={handlePress}>
       <ContainerView>
         <Text>{data.name}</Text>
+        <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: '../../../../../assets/default-group.jpg'
+        }}
+      />
       </ContainerView>
     </TouchableOpacity>
   )
