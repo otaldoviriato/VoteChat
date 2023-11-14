@@ -41,6 +41,7 @@ const pendentesSchema = new Schema(
 const salaSchema = new Schema(
   {
     name: { type: String, required: true },
+    description: {type: String, required: false},
     members: [
       {
         id_user: { type: Schema.Types.ObjectId, ref: 'User' },

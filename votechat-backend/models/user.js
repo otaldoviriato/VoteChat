@@ -5,17 +5,17 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     email: {
       type: String,
-      required: true,
+      required: false,
     },
     senha: {
       type: String,
-      required: true,
+      required: false,
     },
-    fotoPerfil: {
+    profilePicture: {
       type: String,
       required: false,
     },
