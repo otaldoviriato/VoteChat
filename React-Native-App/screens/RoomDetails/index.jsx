@@ -27,10 +27,16 @@ export default function RoomDetails() {
   // Acesse as props da rota
   const { data } = route.params
 
+  function copiarLink(){
+    const id_sala = data._id
+    const link = 'www.votechat.com.br/group-invitation/'+{id_sala}
+  }
+
 
   return (
     <View style={styles.container}>
       <Text>Nome da Sala: {data.name}</Text>
+      <TouchableOpacity onPress={copiarLink}>Copiar Link</TouchableOpacity>
       <SocketComponent data={data} />
       <Button
         title="Voltar"
