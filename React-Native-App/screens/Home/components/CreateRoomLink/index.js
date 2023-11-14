@@ -2,16 +2,16 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { createURL, useURL } from 'expo-linking'
 
-export default function EnterRoom(){
+export default function CreateRoomLink(){
     const redirectURL = useURL()
 
-    const url = createURL ('EnterRoom', {})
+    const url = createURL('RequisitosDaSala', {})
     console.log('URL=>', url)
 
     return (
         <>
         <View>
-            <Text>{redirectURL}</Text>
+            
         </View>
         </>
     )
