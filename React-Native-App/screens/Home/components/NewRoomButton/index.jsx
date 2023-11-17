@@ -1,19 +1,20 @@
-import React, { useState, useContext } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { AuthContext } from "../../../../context/authContext"
-import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native'
-import { Entypo } from '@expo/vector-icons'
+import React, { useState, useContext } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../../../context/authContext';
+import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function NewRoomButton() {
-  const [modalVisible, setModalVisible] = useState(false)
-  const [roomName, setRoomName] = useState('')
-  const [roomDescription, setRoomDescription] = useState('')
-  const [error, setError] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+export default function NewRoomButton({ onRoomCreation }) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [roomName, setRoomName] = useState('');
+  const [roomDescription, setRoomDescription] = useState('');
+  const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   function openModal() {
     setCurrentPage(1);
@@ -21,49 +22,59 @@ export default function NewRoomButton() {
   }
 
   async function createRoom() {
-    const id = user?._id
-
     try {
-      const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/createRoom", {
-        method: "POST",
+      const res = await fetch('http://192.168.100.5:3000/api/homeScreenAPI/createRoom', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          'Authorization': `${user.trim() || ''}`
         },
         body: JSON.stringify({
           roomName,
-          roomDescription
+          roomDescription,
         }),
-      })
-
-      const resposta = await res.json()
-      await AsyncStorage.setItem('user1', JSON.stringify(resposta.token))
+      });
+  
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+  
+      const resposta = await res.json();
+  
+      // Check if the response contains an error message
+      if (resposta.error) {
+        throw new Error(`Server error: ${resposta.error}`);
+      }
+  
+      await AsyncStorage.setItem('user1', JSON.stringify(resposta.token));
+      onRoomCreation() // Trigger a re-render of RoomsList
+      closeModal()
+  
     } catch (error) {
-      console.error("Error creating room:", error)
+      console.error('Error creating room:', error.message);
       throw error; // rethrow the error to be caught outside
     }
   }
 
   async function handleCreateRoom() {
     try {
-      await createRoom()
+      await createRoom();
     } catch (error) {
     }
   }
 
-
   function goToNextPage() {
     if (!roomName) {
-      setError("Preencha todos os campos")
-      return
+      setError('Preencha todos os campos');
+      return;
     }
-    // Lógica para lidar com a transição para a próxima página
-    setCurrentPage(currentPage + 1)
+    setCurrentPage(currentPage + 1);
   }
 
   function closeModal() {
-    setModalVisible(false)
-    setRoomName('')
-    setRoomDescription('')
+    setModalVisible(false);
+    setRoomName('');
+    setRoomDescription('');
   }
 
   return (

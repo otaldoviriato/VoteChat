@@ -25,11 +25,11 @@ const Item = ({ data }) => {
       <ContainerView>
         <Text>{data.name}</Text>
         <Image
-        style={styles.tinyLogo}
-        source={{
-          uri: '../../../../../assets/default-group.jpg'
-        }}
-      />
+          style={styles.tinyLogo}
+          source={{
+            uri: '../../../../../assets/default-group.jpg'
+          }}
+        />
       </ContainerView>
     </TouchableOpacity>
   )
@@ -37,46 +37,53 @@ const Item = ({ data }) => {
 
 function RoomsList() {
   const { user } = useContext(AuthContext)
-  const id = user?._id
-  
   const [roomdata, setRoomData] = useState([])
-  const [numColumns, setNumColumns] = useState(1); // Inicialize com 1 coluna
+  const [numColumns, setNumColumns] = useState(1) // Inicialize com 1 coluna
 
   const changeNumColumns = (columns) => {
     setNumColumns(columns)
   }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/listRooms", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id
-          }),
-        })
-        
-        const RoomData = await res.json()
-        setRoomData(RoomData)
-      } catch (error) {
-        console.log('error listing rooms', error)
-      }
-    }
-    fetchData()
-  }, [id])
+    if (user) {
+      const fetchData = async () => {
+        try {
+          if (user) {
+            const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/listRooms", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${user.trim() || ''}`,
+              },
+              body: JSON.stringify({}),
+            });
+  
+            const RoomData = await res.json();
+            setRoomData(RoomData);
+          }
+        } catch (error) {
+          console.log('error listing rooms', error);
+        }
+      };
+  
+      fetchData()
+    } 
+  }, [user])
+
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={roomdata}
-        renderItem={({ item }) => <Item data={item} />}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={numColumns}
-        key={numColumns}
-      />
+      {user ? (
+        <FlatList
+          data={roomdata}
+          renderItem={({ item }) => <Item data={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={numColumns}
+          key={numColumns}
+        />
+      ) : (
+        <Text>Sem grupos para exibir</Text>
+      )}
     </SafeAreaView>
   )
 }
