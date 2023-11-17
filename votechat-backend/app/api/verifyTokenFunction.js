@@ -1,28 +1,30 @@
 import { connectMongoDB } from "../../../../lib/mongodb"
 import User from "../../../../models/user"
-import jwt from 'jsonwebtoken'
-import User from "@/models/user"
+import JWT from 'expo-jwt'
 
-// Função para descriptografar o token
 export default async function verifyToken(token) {
+    const key = process.env.SECRET_KEY
     try {
         if (token) {
             // Verificar e decodificar o token
-            const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+            const decodedToken = JWT.decode(token, key)
 
-            // Retorna o valor decodificado do token
-            return ({token: token, id: decodedToken})
+            // Retorna o valor decodificado do token, incluindo o token
+            return { token, id: decodedToken }
         } else {
-            await connectMongoDB
+            console.log('teste')
+            await connectMongoDB()
             const createdUser = await User.create({})
-            // Se o token não existe, crie um novo
-            const newUserToken = jwt.sign({ id_user: createdUser._id }, process.env.SECRET_KEY )
+            const id_user = createdUser._id
 
-            // Retorna o novo token
-            return ({token: newUserToken, id: createdUser._id})
+
+            // Se o token não existe, crie um novo
+            const newUserToken = JWT.encode({ id_user }, key)
+
+            // Retorna o novo token e o ID do usuário
+            return { token: newUserToken, id: id_user }
         }
     } catch (error) {
-        // Lidar com erros, por exemplo, token inválido
         console.error('Erro ao verificar/descriptografar o token:', error.message)
         throw new Error('Erro ao verificar/descriptografar o token')
     }

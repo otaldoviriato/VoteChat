@@ -24,39 +24,31 @@ export default function NewRoomButton() {
     const id = user?._id
 
     try {
-
-      const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/createRoom", {
+      const res = await fetch("http://192.168.100.2:3000/api/homeScreenAPI/createRoom", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          roomName,
-          id, 
-          roomDescription
+
         }),
       })
 
-      if (res.ok) {
-        setRoomName('')
-        setRoomDescription('')
-        closeModal()
-        const responseData = await res.json()
-        const data = responseData.data
-
-        //lógica para redireconar para a sala
-        navigation.navigate('DetalhesDaSala', { data })
-
-      } else {
-        setRoomName('')
-        setRoomDescription('')
-        console.log("Registro da sala falhou.")
-      }
-
+      const data = await res.json()
+      console.log(JSON.stringify(data))
     } catch (error) {
-      console.log('error during registraion', error)
+      console.error("Error creating room:", error)
+      throw error; // rethrow the error to be caught outside
     }
   }
+
+  async function handleCreateRoom() {
+    try {
+      await createRoom()
+    } catch (error) {
+    }
+  }
+
 
   function goToNextPage() {
     if (!roomName) {
@@ -121,7 +113,7 @@ export default function NewRoomButton() {
                 <TouchableOpacity onPress={closeModal}>
                   <Text>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={createRoom}>
+                <TouchableOpacity onPress={handleCreateRoom}>
                   <Text>Criar Sala</Text>
                 </TouchableOpacity>
               </>
