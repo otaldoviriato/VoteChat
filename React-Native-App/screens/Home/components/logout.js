@@ -5,10 +5,13 @@ import { AuthContext } from '../../../context/authContext'
 
 const Logout = () => {
   const { setUser, user } = useContext(AuthContext)
+
+  
   async function deslogar () {
     await AsyncStorage.removeItem('user1')
     setUser(null)
   }
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={deslogar} style={styles.button}>

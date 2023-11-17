@@ -14,7 +14,7 @@ function LoginLogic() {
       const data = await checkUserExists()
 
       if(data){
-        setUser(JSON.parse(data))
+   
       }
     }
   

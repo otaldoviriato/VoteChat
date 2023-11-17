@@ -28,8 +28,6 @@ const LoginComponent = () => {
     const response = await res.json()
 
     if (res.status == 200){
-      setUser(response.data)
-      await AsyncStorage.setItem('user1', JSON.stringify(response.data))
     }else{ 
       setUser(null)
     }
