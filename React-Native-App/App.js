@@ -1,12 +1,12 @@
 import React from 'react'
-import LoginLogic from './screens/Login/components/login-logic'
 import AuthProvider from './context/authContext'
+import NavigatorComponent from './Navigator'
 
 export default function App() {
 
   return (
     <AuthProvider>
-      <LoginLogic />
+      <NavigatorComponent />
     </AuthProvider>
   )
 }
