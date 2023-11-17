@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, TouchableOpacity, StyleSheet, Platform, StatusBar} from 'react-native'
+import { View, Text, Button, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native'
+import * as Clipboard from 'expo-clipboard'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import SocketComponent from './components/socketComponent/socketComponent'
-import CopyIdSala from './components/copyIdSala/copyIdSala'
 
 const Pendentes = ({ data }) => {
   const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
@@ -27,23 +27,24 @@ export default function RoomDetails() {
   // Acesse as props da rota
   const { data } = route.params
 
-  function copiarLink(){
+  async function copiarLink(){
     const id_sala = data._id
-    const link = 'www.votechat.com.br/group-invitation/'+{id_sala}
+    const link = 'www.votechat.com.br/group-invitation/'+id_sala
+
+    await Clipboard.setStringAsync(link)
   }
 
-
+  
   return (
     <View style={styles.container}>
       <Text>Nome da Sala: {data.name}</Text>
-      <TouchableOpacity onPress={copiarLink}>Copiar Link</TouchableOpacity>
+      <TouchableOpacity onPress={copiarLink}><Text>Copiar Link</Text></TouchableOpacity>
       <SocketComponent data={data} />
       <Button
         title="Voltar"
         onPress={() => navigation.goBack()}
       />
       <Pendentes data={data} />
-      <CopyIdSala id_sala={data._id} />
     </View>
   )
 }
