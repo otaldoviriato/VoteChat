@@ -3,11 +3,12 @@ import User from "../../models/user"
 import jwt from 'jsonwebtoken'
 
 export default async function verifyToken(token) {
+    console.log(token)
     const key = process.env.SECRET_KEY
     try {
         if (token) {
             // Verificar e decodificar o token
-            const decodedToken = jwt.verify(token, key)
+            const decodedToken = jwt.verify(JSON.parse(token), key)
 
             // Retorna o valor decodificado do token, incluindo o token
             return { token, id: decodedToken }

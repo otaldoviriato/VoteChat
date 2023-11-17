@@ -1,13 +1,26 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet, BackHandler, Alert, Button } from 'react-native'
-import RoomsList from './components/RoomsList'
-import NewRoomButton from './components/NewRoomButton'
+import React, { useEffect, useContext, useState } from 'react';
+import { View, StyleSheet, BackHandler, Alert, Button } from 'react-native';
+import RoomsList from './components/RoomsList';
+import NewRoomButton from './components/NewRoomButton';
 import { useNavigation } from '@react-navigation/native'
-import Temporary from './components/temporary'
-import Logout from './components/logout'
-
+import Logout from './components/logout';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../context/authContext';
 
 export default function ListRoomsScreen() {
+  const { setUser, user } = useContext(AuthContext);
+  const [refreshRooms, setRefreshRooms] = useState(false);
+  const navigation = useNavigation();
+
+  async function verifyToken() {
+    const userToken = await AsyncStorage.getItem('user1');
+    setUser(userToken);
+  }
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
   useEffect(() => {
     const backAction = () => {
       Alert.alert('Fechar o aplicativo', 'Tem certeza que deseja fechar o aplicativo?', [
@@ -20,32 +33,31 @@ export default function ListRoomsScreen() {
       ]);
       return true;
     };
-  
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-  
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+
     return () => backHandler.remove();
   }, []);
 
-  const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
 
   const handlePress = () => {
-    // Navegue para a tela desejada quando o item for pressionado
-    navigation.navigate('RequisitosDaSala')}
+    navigation.navigate('RequisitosDaSala');
+  };
+
+  const handleRoomCreation = () => {
+    setRefreshRooms((prev) => !prev);
+  };
 
   return (
-  <>
-    <View style={styles.container}>
-      <RoomsList />
-      <Logout/>
-      <NewRoomButton />
-      <Temporary/>
-      <Button onPress={handlePress} title='ver requisitos'/>
-    </View>
-  </>
-  )
+    <>
+      <View style={styles.container}>
+        <RoomsList key={refreshRooms} />
+        <Logout />
+        <NewRoomButton onRoomCreation={handleRoomCreation} />
+        <Button onPress={handlePress} title="ver requisitos" />
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -53,4 +65,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#9AD1FB',
   },
-})
+});
