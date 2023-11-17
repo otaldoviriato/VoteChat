@@ -6,7 +6,7 @@ import StackNavigator from './components/StackNavigator'
 function NavigatorComponent() {
 
   const linking = {
-    prefixes: ['exp://192.168.100.2:19000/--'],
+    prefixes: ['exp://192.168.100.5:19000/--'],
     config: {
       screens: {
         RequisitosDaSala: {

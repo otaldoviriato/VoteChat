@@ -24,18 +24,19 @@ export default function NewRoomButton() {
     const id = user?._id
 
     try {
-      const res = await fetch("http://192.168.100.2:3000/api/homeScreenAPI/createRoom", {
+      const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/createRoom", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-
+          roomName,
+          roomDescription
         }),
       })
 
-      const data = await res.json()
-      console.log(JSON.stringify(data))
+      const resposta = await res.json()
+      await AsyncStorage.setItem('user1', JSON.stringify(resposta.token))
     } catch (error) {
       console.error("Error creating room:", error)
       throw error; // rethrow the error to be caught outside
