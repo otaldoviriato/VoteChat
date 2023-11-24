@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AuthContext } from "../../context/authContext"
 import { useContext, useState } from "react"
 import { View, Text, TouchableOpacity, TextInput, Button, Image } from 'react-native'
@@ -11,6 +11,7 @@ export default function RoomRequirementsScreen({ route }) {
   const [mensagem, setMensagem] = useState('')
   const [answer, setAnswer] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [roomDetails, setRoomDetails] = useState()
 
   const handleImagePicker = async () => {
     try {
@@ -36,10 +37,31 @@ export default function RoomRequirementsScreen({ route }) {
     }
   }
 
+  useEffect(() => {
+    const request = async () => {
+      const url = "http://192.168.100.5:3000/api/roomRequirementsScreenAPI/roomDetails"
+      const headers = {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `${user || ''}`
+        }
+      }
+      const body = {
+        id_sala: route.params?.id
+      }
+  
+      await axios.post(url, body, headers)
+        .then((res) => {
+          setRoomDetails(res.data.sala)
+        }).catch(function (error) { console.error(error) })
+    }
+
+    request()
+  }, [])
 
   //Requisição para Incluir um usuário como pendente em uma sala
-  const sendRequirements = async () => {
-    const url = "http://192.168.100.5:3000/api/ScreenAPI/enterRoom"
+  const request = async () => {
+    const url = "http://192.168.100.5:3000/api/roomRequirementsScreenAPI/enterRoom"
     const headers = {
       headers: {
         "Content-Type": "application/json",
@@ -55,14 +77,25 @@ export default function RoomRequirementsScreen({ route }) {
 
     await axios.post(url, body, headers)
       .then((res) => {
-
-      }).catch(function (error) { console.log(error) })
+        if (res.data.status == 404) {
+          setMensagem("Sala não encontrada")
+        } else if (res.data.status == 401) {
+          setMensagem("Você já é membro ou está pendente nesta sala!")
+        } else {
+          setMensagem("Você entrou para a lista de pendentes, os partcipantes tem até 7 dias para votar")
+        }
+      }).catch(function (error) { console.error(error) })
   }
+
+  const roomName = roomDetails.name
+  const roomDescription = roomDetails.description
 
   return (
     <>
       <View>
         <Text>Entrar na Sala: {route.params?.id}</Text>
+        <Text>Nome da Sala: {roomName}</Text>
+        <Text>Descrição da Sala: {roomDescription}</Text>
         <TextInput
           placeholder="Digite alguma coisa"
           value={answer}
@@ -74,7 +107,7 @@ export default function RoomRequirementsScreen({ route }) {
         </TouchableOpacity>
         {selectedImage && <Image source={{ uri: selectedImage }} style={{ width: 200, height: 200 }} />}
         <Text></Text>
-        <Button title="Enviar" onPress={sendRequirements} />
+        <Button title="Enviar" onPress={request} />
         <Text>{mensagem}</Text>
       </View>
     </>
