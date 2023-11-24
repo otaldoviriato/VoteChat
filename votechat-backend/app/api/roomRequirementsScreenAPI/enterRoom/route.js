@@ -21,7 +21,7 @@ export async function POST(req) {
     const sala = await Salas.findById(id_sala)
 
     if (!sala) {
-      return NextResponse.json({ message: "Sala não encontrada", success: false, status: 400 })
+      return NextResponse.json({ status: 404 })
     }
 
     // Verificar se o usuário já foi encontrado em membros ou pendentes
@@ -29,7 +29,7 @@ export async function POST(req) {
     const pendenteEncontrado = sala.pendentes && sala.pendentes.find(pendente => pendente.id_user && pendente.id_user.toString() === id_user.toString())
 
     if (membroEncontrado || pendenteEncontrado) {
-      return NextResponse.json({ message: "Usuário já encontrado na lista de membros ou pendentes", success: false, status: 401 });
+      return NextResponse.json({ status: 401 });
     } else {
 
       // Adicionar o usuário na lista de pendentes
@@ -47,7 +47,7 @@ export async function POST(req) {
       // Salvar as alterações no banco de dados
       const updatedSala = await sala.save({ validateBeforeSave: false })
 
-      return NextResponse.json({ message: "Usuário adicionado em pendentes", success: true, status: 201 })
+      return NextResponse.json({ status: 201 })
     }
   } catch (error) {
     console.log(error)
