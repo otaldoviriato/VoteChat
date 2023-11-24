@@ -13,6 +13,15 @@ const ContainerView = styled.View`
   border-radius: 5px;
 `
 
+const NoRoomsText = styled.Text`
+  min-height: 80px;
+  width: 100%;
+  padding-top: 50%;
+  text-align: center;
+  font-size: 24px;
+  color: white;
+`
+
 const Item = ({ data }) => {
   const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
 
@@ -55,11 +64,11 @@ function RoomsList() {
     const body = {}
 
     await axios.post(url, body, headers)
-    .then((res) => {
-      setRoomData(res.data)
-      return res.data
-    })
-    .catch((err) => console.error('Error creating room:', err))
+      .then((res) => {
+        setRoomData(res.data)
+        return res.data
+      })
+      .catch((err) => console.error('Error creating room:', err))
   }
 
   // Chamada inicial quando a tela for iniciada
@@ -80,8 +89,10 @@ function RoomsList() {
           renderItem={({ item }) => <Item data={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
-      ) : (
-        <Text>Sem grupos para exibir</Text>
+      ) : (<NoRoomsText>
+        Sem grupos para exibir
+      </NoRoomsText>
+
       )}
     </SafeAreaView>
   )
