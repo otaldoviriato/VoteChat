@@ -1,66 +1,44 @@
-import React, { useState, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../../../context/authContext';
-import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useContext } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../../../../context/authContext'
+import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
 
-export default function NewRoomButton({ onRoomCreation }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [roomName, setRoomName] = useState('');
-  const [roomDescription, setRoomDescription] = useState('');
-  const [error, setError] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+export default function NewRoomButton() {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [roomName, setRoomName] = useState('')
+  const [roomDescription, setRoomDescription] = useState('')
+  const [error, setError] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
 
-  const { user } = useContext(AuthContext);
+  const { user, setUser, setRoomData } = useContext(AuthContext)
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
-  function openModal() {
-    setCurrentPage(1);
-    setModalVisible(true);
-  }
-
-  async function createRoom() {
-    try {
-      const res = await fetch('http://192.168.100.5:3000/api/homeScreenAPI/createRoom', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${user.trim() || ''}`
-        },
-        body: JSON.stringify({
-          roomName,
-          roomDescription,
-        }),
-      });
-  
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
+  const request = async () => {
+    const url = "http://192.168.100.5:3000/api/homeScreenAPI/createRoom"
+    const headers = {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `${user || ''}`
       }
-  
-      const resposta = await res.json();
-  
-      // Check if the response contains an error message
-      if (resposta.error) {
-        throw new Error(`Server error: ${resposta.error}`);
-      }
-  
-      await AsyncStorage.setItem('user1', JSON.stringify(resposta.token));
-      onRoomCreation() // Trigger a re-render of RoomsList
-      closeModal()
-  
-    } catch (error) {
-      console.error('Error creating room:', error.message);
-      throw error; // rethrow the error to be caught outside
     }
-  }
+    const body = {
+      roomName,
+      roomDescription,
+    }
 
-  async function handleCreateRoom() {
-    try {
-      await createRoom();
-    } catch (error) {
-    }
+    await axios.post(url, body, headers)
+      .then(async (res) => {
+        closeModal()
+        if (!user) {
+          await AsyncStorage.setItem('user1', res.data.token)
+          setUser(res.data.token)
+        }
+        setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
+      }).catch((err) => console.error('Error creating room:', err))
   }
 
   function goToNextPage() {
@@ -77,11 +55,16 @@ export default function NewRoomButton({ onRoomCreation }) {
     setRoomDescription('');
   }
 
+  function openModal() {
+    setCurrentPage(1);
+    setModalVisible(true)
+  }
+
   return (
     <>
       <View style={styles.container}>
         <TouchableOpacity onPress={openModal} style={styles.button}>
-          <Entypo name="plus" size={42} color="white" />
+          <AntDesign name="plus" size={42} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -125,7 +108,7 @@ export default function NewRoomButton({ onRoomCreation }) {
                 <TouchableOpacity onPress={closeModal}>
                   <Text>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleCreateRoom}>
+                <TouchableOpacity onPress={request}>
                   <Text>Criar Sala</Text>
                 </TouchableOpacity>
               </>
@@ -134,7 +117,7 @@ export default function NewRoomButton({ onRoomCreation }) {
         </View>
       </Modal>
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

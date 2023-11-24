@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { SafeAreaView, View, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import React, { useEffect, useContext, useRef } from 'react'
+import { SafeAreaView, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import styled from 'styled-components/native'
 import { AuthContext } from '../../../../context/authContext'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios'
 
 const ContainerView = styled.View`
   background-color: gray;
@@ -18,6 +19,11 @@ const Item = ({ data }) => {
   const handlePress = () => {
     // Navegue para a tela desejada quando o item for pressionado
     navigation.navigate('DetalhesDaSala', { data })
+  }
+
+  if (!data) {
+    console.log('passou aqui')
+    return null // ou qualquer lógica para lidar com dados ausentes
   }
 
   return (
@@ -36,50 +42,43 @@ const Item = ({ data }) => {
 }
 
 function RoomsList() {
-  const { user } = useContext(AuthContext)
-  const [roomdata, setRoomData] = useState([])
-  const [numColumns, setNumColumns] = useState(1) // Inicialize com 1 coluna
+  const { user, roomData, setRoomData } = useContext(AuthContext)
 
-  const changeNumColumns = (columns) => {
-    setNumColumns(columns)
+  const request = async () => {
+    const url = 'http://192.168.100.5:3000/api/homeScreenAPI/listRooms'
+    const headers = {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `${user || ''}`
+      }
+    }
+    const body = {}
+
+    await axios.post(url, body, headers)
+    .then((res) => {
+      setRoomData(res.data)
+      return res.data
+    })
+    .catch((err) => console.error('Error creating room:', err))
   }
 
+  // Chamada inicial quando a tela for iniciada
   useEffect(() => {
-    if (user) {
-      const fetchData = async () => {
-        try {
-          if (user) {
-            const res = await fetch("http://192.168.100.5:3000/api/homeScreenAPI/listRooms", {
-              method: "POST",
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `${user.trim() || ''}`,
-              },
-              body: JSON.stringify({}),
-            });
-  
-            const RoomData = await res.json();
-            setRoomData(RoomData);
-          }
-        } catch (error) {
-          console.log('error listing rooms', error);
-        }
-      };
-  
-      fetchData()
-    } 
-  }, [user])
+    request()
+  }, [])
 
+  // Chamada sempre que houver mudança em user
+  useEffect(() => {
+    request()
+  }, [user])
 
   return (
     <SafeAreaView style={styles.container}>
-      {user ? (
+      {user && roomData ? (
         <FlatList
-          data={roomdata}
+          data={roomData}
           renderItem={({ item }) => <Item data={item} />}
           keyExtractor={(item, index) => index.toString()}
-          numColumns={numColumns}
-          key={numColumns}
         />
       ) : (
         <Text>Sem grupos para exibir</Text>

@@ -21,15 +21,18 @@ export default function (props) {
     useEffect(() => {
         async function fetchData(Pendentes) {
             try {
-                const res = await fetch("http://192.168.100.5:3000/api/pendingScreenAPI/getDataPendentes", {
-                    method: "POST",
+                const fetchData = await axios.post(
+                  'http://192.168.100.5:3000/api/pendingScreenAPI/getDataPendentes',
+                  {
+                    Pendentes
+                  },
+                  {
                     headers: {
-                        "Content-Type": "application/json",
+                      'Content-Type': 'application/json',
+                      'Authorization': `${user || ''}`
                     },
-                    body: JSON.stringify({
-                        Pendentes,
-                    }),
-                })
+                  }
+                )
 
                 if (res.ok) {
                     const dataPendentes = await res.json()
