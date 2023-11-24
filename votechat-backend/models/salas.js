@@ -11,7 +11,7 @@ const mensagemSchema = new Schema(
 
 const pendentesSchema = new Schema(
 {
-      pedidoEm: { type: Date, required: false },
+      pedidoEm: { type: Date, required: true },
       id_user: { type: Schema.Types.ObjectId, ref: 'User' },
       votos: [
         {
@@ -26,9 +26,8 @@ const pendentesSchema = new Schema(
       dados: [
         {
             type: new mongoose.Schema({
-            type: { type: String, required: true },
-            label: { type: String, required: true },
-            value: {type: String, required: true }
+            answers: { type: String, required: false },
+            picture: {type: String, required: false }
           },
             { timestamps: true }
           ),
@@ -51,7 +50,7 @@ const salaSchema = new Schema(
     pendentes: [pendentesSchema],
   },
   { timestamps: true }
-);
+)
 
 const Salas = models.Salas || mongoose.model('Salas', salaSchema);
 module.exports = Salas;
