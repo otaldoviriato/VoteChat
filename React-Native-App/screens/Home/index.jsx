@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from 'react';
 import { View, StyleSheet, BackHandler, Alert } from 'react-native';
 import RoomsList from './components/RoomsList';
 import NewRoomButton from './components/NewRoomButton';
-import Logout from './components/logout';
 import Temporary from './temporary';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/authContext'
@@ -42,7 +41,6 @@ export default function ListRoomsScreen() {
       <View style={styles.container}>
         <RoomsList />
         <Temporary />
-        <Logout />
         <NewRoomButton />
       </View>
     </>

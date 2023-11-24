@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AntDesign } from '@expo/vector-icons'
-import { useNavigation, useRoute } from '@react-navigation/native'
 
 // Import das screens
 import ListRoomsScreen from '../../../screens/Home'
@@ -10,15 +9,11 @@ import RoomDetailsScreen from '../../../screens/RoomDetails'
 import ListPendingScreen from '../../../screens/Pending'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 import UserProfile from '../../../screens/Home/components/UserProfile'
+import MenuBtn from '../../../screens/Home/components/MenuButton';
 
 const Stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
-  const navigation = useNavigation();
-
-  const openConfig = () => {
-    navigation.navigate('PerfilDoUsuario')
-  }
 
   return (
     <Stack.Navigator>
@@ -33,9 +28,9 @@ const StackNavigator = () => {
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            <TouchableOpacity onPress={openConfig} >
+            <MenuBtn >
               <AntDesign name="bars" size={24} color="white" />
-            </TouchableOpacity>
+            </MenuBtn>
           </View>
         ),
       }} />
