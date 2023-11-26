@@ -62,14 +62,10 @@ function RoomsList() {
     await axios.post(url, body, headers)
       .then((res) => {
         setRoomData(res.data)
+        console.log("Lista de salas carregada para o token: "+user)
       })
       .catch((err) => console.error('Error creating room:', err))
   }
-
-  // Chamada inicial quando a tela for iniciada
-  useEffect(() => {
-    request()
-  }, [])
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
