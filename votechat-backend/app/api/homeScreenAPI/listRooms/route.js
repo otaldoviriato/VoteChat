@@ -15,9 +15,6 @@ export async function POST(req) {
         if (req.headers.get('authorization')) {
             // Decodifica o token
             id_user = jwt.verify(req.headers.get('authorization'), process.env.SECRET_KEY).id_user
-
-            console.log(id_user)
-            
         } else {
             const createdUser = await User.create({})
             id_user = createdUser._id
