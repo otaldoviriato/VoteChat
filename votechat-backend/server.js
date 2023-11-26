@@ -3,6 +3,7 @@ const http = require('http')
 const { Server } = require('socket.io')
 const next = require('next')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -21,12 +22,15 @@ app.prepare().then(() => {
     console.log('Cliente conectado ao Socket.io')
 
     socket.on('message', async (data) => {
+
+      id_user = jwt.verify(data.token, process.env.SECRET_KEY).id_user
+
       try {
 
         const id_sala = data.id_sala
         const mensagemToDB = {
           conteudo: data.message,
-          remetente: data.id_user,
+          remetente: id_user,
         }
 
         const Salas = require('./models/salas')
@@ -44,7 +48,7 @@ app.prepare().then(() => {
         
 
         const User = require('./models/user'); // Suponha que você tenha um modelo de usuário
-        const usuario = await User.findById(data.id_user);
+        const usuario = await User.findById(id_user);
 
         const mensagemToUsers = {
           _id: sala.mensagens[sala.mensagens.length - 1]._id,

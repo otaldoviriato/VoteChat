@@ -8,13 +8,15 @@ import MessageInput from '../messageInput/messageInput'
 const socket = io.connect(API_URL)
 
 const MessageList = (props) => {
-  const [oldMessages, setOldMessages] = useState(props.data.mensagens)
-  /*
-  Os dados precisam ser buscados ao abrir a sala
-  Atualmente são buscados ao listar as salas.
-  Logo já estarão desatualizados quando o usuário clicar.
-  */
-
+  const [oldMessages, setOldMessages] = useState([])
+ 
+  useEffect(() => {
+    /*
+    Os dados precisam ser buscados ao abrir a sala
+    Atualmente são buscados ao listar as salas.
+    Logo já estarão desatualizados quando o usuário clicar.
+    */
+  }, [])
 
   useEffect(() => {
     const handleMessage = (message) => {
@@ -24,7 +26,7 @@ const MessageList = (props) => {
         {
           _id: message._id,
           name: message.name || "Usuário Anônimo",
-          path: message.path || "Caminho não definido",
+          path: message.path || null,
           conteudo: message.data,
         },
       ])

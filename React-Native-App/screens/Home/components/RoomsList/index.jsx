@@ -69,7 +69,7 @@ function RoomsList() {
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-    request()
+    if(user){request()}
   }, [user])
 
   return (

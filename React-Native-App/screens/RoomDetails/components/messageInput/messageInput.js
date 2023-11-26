@@ -16,7 +16,7 @@ const MessageInput = (props) => {
     if (message !== '') {
       const messageData = {
         id_sala: props.data._id,
-        id_user: user?._id,
+        token: user,
         message: message,
       };
       socket.emit('message', messageData);
