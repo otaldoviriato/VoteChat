@@ -25,6 +25,7 @@ const NoRoomsText = styled.Text`
 `
 
 const Item = ({ data }) => {
+
   const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
 
   const handlePress = () => {
@@ -33,7 +34,6 @@ const Item = ({ data }) => {
   }
 
   if (!data) {
-    console.log('passou aqui')
     return null // ou qualquer lógica para lidar com dados ausentes
   }
 
@@ -41,12 +41,6 @@ const Item = ({ data }) => {
     <TouchableOpacity onPress={handlePress}>
       <ContainerView>
         <Text>{data.name}</Text>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: '../../../../../assets/default-group.jpg'
-          }}
-        />
       </ContainerView>
     </TouchableOpacity>
   )
@@ -68,7 +62,6 @@ function RoomsList() {
     await axios.post(url, body, headers)
       .then((res) => {
         setRoomData(res.data)
-        return res.data
       })
       .catch((err) => console.error('Error creating room:', err))
   }

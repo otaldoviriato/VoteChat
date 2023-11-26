@@ -1,16 +1,33 @@
 import { connectMongoDB } from "../../../../lib/mongodb";
 import Salas from "../../../../models/salas";
 import { NextResponse } from "next/server";
-import verifyToken from "../../verifyTokenFunction"
+import User from "../../../../models/user"
+import jwt from 'jsonwebtoken'
 
 export async function POST(req) {
+    let id_user;
+    let newUserToken;
+
+    await connectMongoDB()
+
     try {
-        //Descriptografa o Token
-        const res = await verifyToken(req.headers.get('authorization'))
+        //Verfica se recebeu o token e decide se decodifica ou cria um novo usuário
+        if (req.headers.get('authorization')) {
+            // Decodifica o token
+            id_user = jwt.verify(req.headers.get('authorization'), process.env.SECRET_KEY).id_user
+
+            console.log(id_user)
+            
+        } else {
+            const createdUser = await User.create({})
+            id_user = createdUser._id
+
+            // Se o token não existe, cria um novo
+            newUserToken = jwt.sign({ id_user }, process.env.SECRET_KEY)
+        }
 
         //Busca os dados no MongoDB
-        await connectMongoDB()
-        const salasUsuario = await Salas.find({ 'members.id_user': res.id.id_user }).exec()
+        const salasUsuario = await Salas.find({ 'members.id_user': id_user }).exec()
 
         //Devolve as informações como resposta da requisição
         return NextResponse.json(salasUsuario)

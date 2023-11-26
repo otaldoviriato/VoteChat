@@ -48,8 +48,8 @@ app.prepare().then(() => {
 
         const mensagemToUsers = {
           _id: sala.mensagens[sala.mensagens.length - 1]._id,
-          name: usuario.name,
-          path: usuario.fotoPerfil,
+          name: usuario ? usuario.name : null, // Verifica se usuario não é nulo
+          path: usuario ? usuario.fotoPerfil : null, // Verifica se usuario não é nulo
           data: data.message,
         }
 
