@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Button } from 'react-native'
 import { AuthContext } from '../../../../context/authContext';
+import { API_URL } from '../../../../constants'
 
 export default function VoteButton({ salaId, userId }) {
   const { user } = useContext(AuthContext)
@@ -8,7 +9,7 @@ export default function VoteButton({ salaId, userId }) {
   const handleSubmit = async (voto) => {
 
     try {
-      const res = await fetch("http://192.168.100.5:3000/api/pendingScreenAPI/registerVote", {
+      const res = await fetch(API_URL+"api/pendingScreenAPI/registerVote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +33,7 @@ export default function VoteButton({ salaId, userId }) {
     }
 
     try {
-      const res = await fetch("http://192.168.100.5:3000/api/pendingScreenAPI/checkVotes", {
+      const res = await fetch(API_URL+"api/pendingScreenAPI/checkVotes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

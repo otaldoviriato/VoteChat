@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { CheckBox } from 'react-native-btr'
 import { TextInput } from 'react-native-paper'
 import { AuthContext } from '../../../../context/authContext'
+import { API_URL } from '../../../../constants';
 
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ const LoginComponent = () => {
  
 
   const handleLogin = async () => {  
-    const res = await fetch('http://192.168.100.5:3000/api/loginScreenAPI/login', {
+    const res = await fetch(API_URL+'api/loginScreenAPI/login', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

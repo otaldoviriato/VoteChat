@@ -2,6 +2,8 @@ import React, { useEffect, useContext, useRef } from 'react'
 import { SafeAreaView, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import styled from 'styled-components/native'
 import { AuthContext } from '../../../../context/authContext'
+import { COLORS } from '../../../../theme/colors'
+import { API_URL } from '../../../../constants';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 
@@ -19,7 +21,7 @@ const NoRoomsText = styled.Text`
   padding-top: 50%;
   text-align: center;
   font-size: 24px;
-  color: white;
+  color: ${COLORS.white};
 `
 
 const Item = ({ data }) => {
@@ -54,7 +56,7 @@ function RoomsList() {
   const { user, roomData, setRoomData } = useContext(AuthContext)
 
   const request = async () => {
-    const url = 'http://192.168.100.5:3000/api/homeScreenAPI/listRooms'
+    const url = API_URL+'/api/homeScreenAPI/listRooms'
     const headers = {
       headers: {
         "Content-Type": "application/json",

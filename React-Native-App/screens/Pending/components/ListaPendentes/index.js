@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import VoteButton from '../VoteButton'
+import { API_URL } from '../../../../constants';
 
 export default function (props) {
     const [dadosUsuariosPendetes, setdadosUsuariosPendetes] = useState([])
@@ -22,7 +23,7 @@ export default function (props) {
         async function fetchData(Pendentes) {
             try {
                 const fetchData = await axios.post(
-                  'http://192.168.100.5:3000/api/pendingScreenAPI/getDataPendentes',
+                    API_URL+'api/pendingScreenAPI/getDataPendentes',
                   {
                     Pendentes
                   },

@@ -4,6 +4,7 @@ import { useContext, useState } from "react"
 import { View, Text, TouchableOpacity, TextInput, Button, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import axios from 'axios'
+import { API_URL } from '../../constants'
 
 
 export default function RoomRequirementsScreen({ route }) {
@@ -39,7 +40,7 @@ export default function RoomRequirementsScreen({ route }) {
 
   useEffect(() => {
     const request = async () => {
-      const url = "http://192.168.100.5:3000/api/roomRequirementsScreenAPI/roomDetails"
+      const url = API_URL+"api/roomRequirementsScreenAPI/roomDetails"
       const headers = {
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +62,7 @@ export default function RoomRequirementsScreen({ route }) {
 
   //Requisição para Incluir um usuário como pendente em uma sala
   const request = async () => {
-    const url = "http://192.168.100.5:3000/api/roomRequirementsScreenAPI/enterRoom"
+    const url = API_URL+"api/roomRequirementsScreenAPI/enterRoom"
     const headers = {
       headers: {
         "Content-Type": "application/json",

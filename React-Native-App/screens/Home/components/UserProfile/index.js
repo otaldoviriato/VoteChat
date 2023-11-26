@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, TextInput, Image, Button } from 'react-na
 import * as ImagePicker from 'expo-image-picker';
 
 import { AuthContext } from '../../../../context/authContext';
+import { API_URL } from '../../../../constants';
 
 export default function UserProfile() {
     const { user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ export default function UserProfile() {
 
     async function getUserData() {
         try {
-            const res = await fetch('http://192.168.100.5:3000/api/homeScreenAPI/dataUser', {
+            const res = await fetch(API_URL+'api/homeScreenAPI/dataUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

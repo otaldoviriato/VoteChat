@@ -5,6 +5,7 @@ import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'reac
 import { AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { API_URL } from '../../../../constants';
 
 export default function NewRoomButton() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -17,8 +18,9 @@ export default function NewRoomButton() {
 
   const navigation = useNavigation()
 
-  const request = async () => {
-    const url = "http://192.168.100.5:3000/api/homeScreenAPI/createRoom"
+  const request = async () => {    
+    const url = API_URL+"api/homeScreenAPI/createRoom"
+
     const headers = {
       headers: {
         "Content-Type": "application/json",
@@ -29,6 +31,8 @@ export default function NewRoomButton() {
       roomName,
       roomDescription,
     }
+
+   
 
     await axios.post(url, body, headers)
       .then(async (res) => {
