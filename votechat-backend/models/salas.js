@@ -9,7 +9,7 @@ const mensagemSchema = new Schema(
   { timestamps: true }
 )
 
-const votingSchema = new Schema(
+const votationsSchema = new Schema(
 {
       pedidoEm: { type: Date, required: true },
       id_user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -29,7 +29,7 @@ const votingSchema = new Schema(
             answers: { type: String, required: false },
             picture: {type: String, required: false }
           },
-            { timestamps: true }
+            { timestamps: true } 
           ),
         },
       ],
@@ -47,7 +47,7 @@ const salaSchema = new Schema(
       },
     ],
     mensagens: [mensagemSchema],
-    voting: [votingSchema],
+    votations: [votingSchema],
   },
   { timestamps: true }
 )

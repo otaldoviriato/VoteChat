@@ -8,7 +8,7 @@ import ListRoomsScreen from '../../../screens/Home'
 import RoomDetailsScreen from '../../../screens/RoomDetails'
 import ListPendingScreen from '../../../screens/Pending'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
-import UserProfile from '../../../screens/Home/components/UserProfile'
+import UserProfile from '../../../screens/UserProfile'
 import MenuBtn from '../../../screens/Home/components/MenuButton';
 
 const Stack = createNativeStackNavigator()
