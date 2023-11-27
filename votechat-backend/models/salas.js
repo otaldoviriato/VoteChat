@@ -9,7 +9,7 @@ const mensagemSchema = new Schema(
   { timestamps: true }
 )
 
-const pendentesSchema = new Schema(
+const votingSchema = new Schema(
 {
       pedidoEm: { type: Date, required: true },
       id_user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -47,7 +47,7 @@ const salaSchema = new Schema(
       },
     ],
     mensagens: [mensagemSchema],
-    pendentes: [pendentesSchema],
+    voting: [votingSchema],
   },
   { timestamps: true }
 )
