@@ -74,7 +74,7 @@ function RoomsList() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {user && roomData ? (
+      {user && roomData && roomData.length > 0 ? (
         <FlatList
           data={roomData}
           renderItem={({ item }) => <Item data={item} />}

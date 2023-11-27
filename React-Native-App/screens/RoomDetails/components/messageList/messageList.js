@@ -4,44 +4,53 @@ import io from 'socket.io-client'
 import MessageDetails from '../messageDetails/messageDetails'
 import { API_URL } from '../../../../constants'
 import MessageInput from '../messageInput/messageInput'
+import { AuthContext } from '../../../../context/authContext'
+import axios from 'axios'
 
 const socket = io.connect(API_URL)
 
 const MessageList = (props) => {
   const [oldMessages, setOldMessages] = useState([])
- 
+  const { user } = useContext(AuthContext)
+  id_sala = props.data._id
+
   useEffect(() => {
-    /*
-    Os dados precisam ser buscados ao abrir a sala
-    Atualmente são buscados ao listar as salas.
-    Logo já estarão desatualizados quando o usuário clicar.
-    */
+    const request = async () => {
+      const url = API_URL+'/api/roomDetailsAPI/messageDetails'
+      const headers = {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }
+      const body = {id_sala, token_user: user}
+
+      await axios.post(url, body, headers)
+        .then((res) => {
+          setOldMessages(res.data.mensagens)
+        })
+        .catch((err) => console.error('Error creating room:', err))
+    } 
+
+   request()
   }, [])
 
   useEffect(() => {
     const handleMessage = (message) => {
-      console.log('received message');
+      console.log('received message')
       setOldMessages((prevMessages) => [
         ...prevMessages,
-        {
-          _id: message._id,
-          name: message.name || "Usuário Anônimo",
-          path: message.path || null,
-          conteudo: message.data,
-        },
+          message,
       ])
+    }
 
-    };
+    socket.emit('join_room', id_sala)
 
-    socket.emit('join_room', props.data._id)
-
-    socket.on("message", handleMessage);
+    socket.on("message", handleMessage)
 
     return () => {
-      socket.off("message", handleMessage);
-    };
+      socket.off("message", handleMessage)
+    }
   }, [socket])
-
 
   return (
     <>

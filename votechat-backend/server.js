@@ -1,82 +1,83 @@
-const express = require('express')
-const http = require('http')
-const { Server } = require('socket.io')
-const next = require('next')
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const next = require('next');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  const server = express()
-  const httpServer = http.createServer(server)
-  const io = new Server(httpServer)
+  const server = express();
+  const httpServer = http.createServer(server);
+  const io = new Server(httpServer);
 
   server.all('*', (req, res) => {
-    return handle(req, res)
-  })
+    return handle(req, res);
+  });
 
   io.on('connection', socket => {
-    console.log('Cliente conectado ao Socket.io')
+    console.log('Cliente conectado ao Socket.io');
 
     socket.on('message', async (data) => {
 
-      id_user = jwt.verify(data.token, process.env.SECRET_KEY).id_user
+      const id_user = jwt.verify(data.token, process.env.SECRET_KEY).id_user;
 
       try {
 
-        const id_sala = data.id_sala
+        const id_sala = data.id_sala;
         const mensagemToDB = {
           conteudo: data.message,
           remetente: id_user,
-        }
+        };
 
-        const Salas = require('./models/salas')
+        const Salas = require('./models/salas');
         const sala = await Salas.findByIdAndUpdate(
           id_sala,
           { $push: { mensagens: mensagemToDB } },
           { new: true }
-        )
+        );
 
         if (!sala) {
-          console.error('Sala não encontrada')
-          return
+          console.error('Sala não encontrada');
+          return;
         }
 
-        
+        // Acessar a última mensagem adicionada
+        const ultimaMensagem = sala.mensagens[sala.mensagens.length - 1];
 
-        const User = require('./models/user'); // Suponha que você tenha um modelo de usuário
-        const usuario = await User.findById(id_user);
+        // Buscar informações do usuário no banco de dados
+        const User = require('./models/user');
+        const userInfo = await User.findById(ultimaMensagem.remetente).exec();
 
-        const mensagemToUsers = {
-          _id: sala.mensagens[sala.mensagens.length - 1]._id,
-          name: usuario ? usuario.name : null, // Verifica se usuario não é nulo
-          path: usuario ? usuario.fotoPerfil : null, // Verifica se usuario não é nulo
-          data: data.message,
-        }
+        // Substituir o campo remetente pelo objeto userInfo na mensagem
+        ultimaMensagem.remetente = userInfo
 
-        // Emita a mensagem para todos os clientes na sala
-        io.to(id_sala).emit('message', mensagemToUsers)
+        const mensagemToUsers = ultimaMensagem
+        console.log(mensagemToUsers)
+
+        // Emitir a mensagem para todos os clientes na sala
+        io.to(id_sala).emit('message', mensagemToUsers);
 
       } catch (error) {
-        console.error('Erro ao salvar mensagem:', error)
+        console.error('Erro ao salvar mensagem:', error);
       }
-    })
+    });
 
     socket.on('join_room', (data) => {
-      socket.join(data)
-      console.log(`user joined to room: ${data}`)
-    })
+      socket.join(data);
+      console.log(`user joined to room: ${data}`);
+    });
 
     socket.on('disconnect', () => {
-      console.log('Cliente desconectado do Socket.io')
-    })
-  })
+      console.log('Cliente desconectado do Socket.io');
+    });
+  });
 
-  const PORT = process.env.PORT || 3000
+  const PORT = process.env.PORT || 3000;
   httpServer.listen(PORT, () => {
-    console.log(`Servidor Next.js está rodando na porta ${PORT}`)
-  })
-})
+    console.log(`Servidor Next.js está rodando na porta ${PORT}`);
+  });
+});
