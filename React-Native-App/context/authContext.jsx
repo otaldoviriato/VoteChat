@@ -11,11 +11,12 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
         console.log("Buscando informações do usuário no Armazenamento local")
+
         const storedUser = await AsyncStorage.getItem('user')
         const storedUserParse = JSON.parse(storedUser)
         if (storedUserParse?.token) {
           console.log("Dados encontrados: " + storedUserParse);
-          console.log("Dadis armazenados no Armazenamento local")
+          console.log("Dados armazenados no Armazenamento local")
         }else{
           console.log("Nenhum dado encontrado no Armazenamento local")
         }
