@@ -45,7 +45,7 @@ export default function UploadForm() {
 
         } else {
           console.log(res)
-        }
+        } 
 
       } catch (error) {
         console.error(error)
