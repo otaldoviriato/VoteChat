@@ -61,12 +61,9 @@ function RoomsList() {
 
     await axios.post(url, body, headers)
       .then((res) => {
-        if (!user.token) {
-          console.log("Novo usuário criado com sucesso")
-          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
-          console.log("Token do novo usuário armazenado no contexto")
-        }
+
         setRoomData(res.data.roomData)
+
         console.log("Lista de salas carregada para o token: "+user.token)
       })
       .catch((err) => console.error('Error listing room:', err))

@@ -16,8 +16,9 @@ function AuthProvider({ children }) {
         const storedUserParse = JSON.parse(storedUser)
         
         if (storedUserParse?.token) {
-          console.log("Dados encontrados: " + storedUserParse);
-          console.log("Dados armazenados no Armazenamento local")
+          setUser(storedUserParse)
+          
+          console.log("Dados encontrados no Armazenamento local e salvos no contexto")
         }else{
           console.log("Nenhum dado encontrado no Armazenamento local")
         }

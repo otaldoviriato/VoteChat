@@ -35,10 +35,9 @@ export default function NewRoomButton() {
 
     await axios.post(url, body, headers)
       .then(async (res) => {
-        console.log(res.data.roomData)
         closeModal()
         console.log("Sala "+roomName+" criada com sucesso!")
-
+        
         if (!user.token) {
           console.log("Novo usuário criado com sucesso")
           setUser(prevUser => ({ ...prevUser, token: res.data.token }))
