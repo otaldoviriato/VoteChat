@@ -14,6 +14,7 @@ function AuthProvider({ children }) {
 
         const storedUser = await AsyncStorage.getItem('user')
         const storedUserParse = JSON.parse(storedUser)
+        
         if (storedUserParse?.token) {
           console.log("Dados encontrados: " + storedUserParse);
           console.log("Dados armazenados no Armazenamento local")

@@ -19,7 +19,7 @@ export default function MenuBtn({children}) {
 
   async function deslogar () {
     await AsyncStorage.removeItem('user')
-    setUser(null)
+    setUser({token: null, name: null, email: null, profilePicture: null })
   }
 
   function openConfig () {
