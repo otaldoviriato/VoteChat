@@ -72,8 +72,9 @@ export default function RoomRequirementsScreen({ route }) {
     const body = {
       id_sala: route.params?.id,
       pedidoEm: new Date(),
-      answer: answer,
-      picture: selectedImage
+      action: "add_member",
+      actionData: null,
+      actionDescription: answer,
     }
 
     await axios.post(url, body, headers)

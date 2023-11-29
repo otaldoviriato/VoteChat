@@ -9,7 +9,7 @@ const Pendentes = ({ data }) => {
 
   const handlePress = () => {
     // Navegue para a tela desejada quando o item for pressionado
-    navigation.navigate('ListaDePendentes', { data })
+    navigation.navigate('ListaDeVotações', { data })
   }
 
   return (

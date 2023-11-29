@@ -16,7 +16,7 @@ const MessageList = (props) => {
 
   useEffect(() => {
     const request = async () => {
-      const url = API_URL+'/api/roomDetailsAPI/messageDetails'
+      const url = API_URL+'/api/roomDetailsScreenAPI/messageDetails'
       const headers = {
         headers: {
           "Content-Type": "application/json",
