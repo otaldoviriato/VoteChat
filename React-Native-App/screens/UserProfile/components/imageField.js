@@ -38,16 +38,21 @@ export default function ImageField() {
         const headers = {
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `${user || ''}`
+                'Authorization': `${user.token || ''}`
             }
         }
-        const body = { newName }
+        const body = { selectedImage }
 
         await axios.post(url, body, headers)
             .then((res) => {
+                setUser(prevUser => ({
+                    ...prevUser,
+                    profilePicture: res.data.profilePicture
+                }))
+                setSelectedImage(null);
                 setIsEditingPicture(false)
             })
-            .catch((err) => console.error('Error creating room:', err))
+            .catch((err) => console.error('Error updating user picture:', err))
     }
     const handleCancel = () => {
         setSelectedImage(null);

@@ -1,29 +1,36 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../../context/authContext'
 import { Text, TouchableOpacity, TextInput, View } from 'react-native';
+import { API_URL } from '../../../constants'
+import axios from "axios"
 
 export default function NameField() {
     const [isEditingName, setIsEditingName] = useState(false);
     const [newName, setNewName] = useState('');
 
-    const { user } = useContext(AuthContext)
+    const { user, setUser } = useContext(AuthContext)
 
     const request = async () => {
-        const url = API_URL+'api/votationsScreenAPI/getDataVotations'
+        const url = API_URL + 'api/userProfileScreenAPI/updateUser'
         const headers = {
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `${user || ''}`
-          }
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `${user.token || ''}`
+            }
         }
         const body = { newName }
-    
+
         await axios.post(url, body, headers)
-          .then((res) => {
-            setIsEditingName(false)
-          })
-          .catch((err) => console.error('Error creating room:', err))
-      }
+            .then((res) => {
+                setUser(prevUser => ({
+                    ...prevUser,
+                    name: res.data.name
+                }))
+                setIsEditingName(false)
+                setNewName('')
+            })
+            .catch((err) => console.error('Error updating user name:', err))
+    }
 
     const handleCancel = () => {
         setNewName('');
@@ -33,7 +40,7 @@ export default function NameField() {
 
     return (
         <View>
-            <Text>Nome:</Text>
+            <Text>Nome: {user.name}</Text>
             {isEditingName ? (
                 <>
                     <TextInput

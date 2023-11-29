@@ -44,7 +44,7 @@ export default function RoomRequirementsScreen({ route }) {
       const headers = {
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `${user || ''}`
+           'Authorization': `${user.token || ''}`
         }
       }
       const body = {
@@ -66,7 +66,7 @@ export default function RoomRequirementsScreen({ route }) {
     const headers = {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `${user || ''}`
+         'Authorization': `${user.token || ''}`
       }
     }
     const body = {

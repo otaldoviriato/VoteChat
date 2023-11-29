@@ -18,7 +18,7 @@ export default function votaionList (props) {
             const headers = {
               headers: {
                 "Content-Type": "application/json",
-                'Authorization': `${user || ''}`
+                 'Authorization': `${user.token || ''}`
               }
             }
             const body = { id_sala }

@@ -24,7 +24,7 @@ export default function NewRoomButton() {
     const headers = {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `${user || ''}`
+         'Authorization': `${user.token || ''}`
       }
     }
     const body = {
@@ -32,14 +32,14 @@ export default function NewRoomButton() {
       roomDescription,
     }
 
-   
-
     await axios.post(url, body, headers)
       .then(async (res) => {
         closeModal()
-        if (!user) {
-          await AsyncStorage.setItem('user1', res.data.token)
-          setUser(res.data.token)
+        if (!user.token) {
+          setUser(prevUser => ({
+            ...prevUser,
+            token: res.data.token
+          }))
         }
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
       }).catch((err) => console.error('Error creating room:', err))
@@ -51,6 +51,7 @@ export default function NewRoomButton() {
       return;
     }
     setCurrentPage(currentPage + 1);
+    setError('')
   }
 
   function closeModal() {

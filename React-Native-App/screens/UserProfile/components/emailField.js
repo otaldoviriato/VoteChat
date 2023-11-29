@@ -1,29 +1,36 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../../context/authContext'
 import { Text, TouchableOpacity, TextInput, View } from 'react-native';
+import { API_URL } from '../../../constants'
+import axios from "axios"
 
 export default function EmailField() {
     const [isEditingEmail, setIsEditingEmail] = useState(false);
     const [newEmail, setNewEmail] = useState('');
 
-    const { user } = useContext(AuthContext)
+    const { user, setUser } = useContext(AuthContext)
 
     const request = async () => {
-        const url = API_URL+'api/votationsScreenAPI/getDataVotations'
+        const url = API_URL + 'api/userProfileScreenAPI/updateUser'
         const headers = {
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `${user || ''}`
-          }
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `${user.token || ''}`
+            }
         }
-        const body = { newName }
-    
+        const body = { newEmail }
+
         await axios.post(url, body, headers)
-          .then((res) => {
-            setIsEditingName(false)
-          })
-          .catch((err) => console.error('Error creating room:', err))
-      }
+            .then((res) => {
+                setUser(prevUser => ({
+                    ...prevUser,
+                    email: res.data.email
+                }))
+                setNewEmail('')
+                setIsEditingEmail(false)
+            })
+            .catch((err) => console.error('Error updating user email:', err))
+    }
     const handleCancel = () => {
         setNewEmail('');
         setIsEditingEmail(false);
@@ -32,7 +39,7 @@ export default function EmailField() {
 
     return (
         <View>
-            <Text>Email:</Text>
+            <Text>Email:  {user.email}</Text>
             {isEditingEmail ? (
                 <>
                     <TextInput

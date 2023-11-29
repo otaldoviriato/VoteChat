@@ -13,7 +13,7 @@ export default function VoteButton({ id_sala, id_votado }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `${user || ''}`,
+           'Authorization': `${user.token || ''}`,
         },
         body: JSON.stringify({
           id_sala: id_sala,

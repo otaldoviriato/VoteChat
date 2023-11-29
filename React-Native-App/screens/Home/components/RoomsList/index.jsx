@@ -47,31 +47,47 @@ const Item = ({ data }) => {
 }
 
 function RoomsList() {
-  const { user, roomData, setRoomData } = useContext(AuthContext)
+  const { user, setUser, roomData, setRoomData } = useContext(AuthContext)
 
   const request = async () => {
-    const url = API_URL+'/api/homeScreenAPI/listRooms'
+    const url = API_URL+'api/homeScreenAPI/listRooms'
     const headers = {
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `${user || ''}`
+         'Authorization': `${user.token || ''}`
       }
     }
     const body = {}
 
     await axios.post(url, body, headers)
       .then((res) => {
-        setRoomData(res.data)
-        console.log("Lista de salas carregada para o token: "+user)
+        setRoomData(res.data.roomData)
+        console.log("aaaaaaaaaaaaa:" + user.token)
+        if (!user.token) {
+          setUser(prevUser => ({
+            ...prevUser,
+            token: res.data.token
+          }))
+        }
+        console.log("Lista de salas carregada para o token: "+user.token)
       })
-      .catch((err) => console.error('Error creating room:', err))
+      .catch((err) => console.error('Error listing room:', err))
   }
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-    if(user){request()}
-  }, [user])
-
+    if (user) {
+      const isTokenNullOrUndefined = user.token === null || user.token === undefined;
+  
+      // Se user.token não é null ou undefined, ou se já é null, faz a chamada para a API
+      if (!isTokenNullOrUndefined) {
+        request();
+      } else {
+        console.log("user.token é null ou undefined, aguardando atualização...");
+      }
+    }
+  }, [user.token]);
+  
   return (
     <SafeAreaView style={styles.container}>
       {user && roomData && roomData.length > 0 ? (
