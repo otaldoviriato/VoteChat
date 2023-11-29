@@ -20,21 +20,29 @@ function AuthProvider({ children }) {
           
           console.log("Dados encontrados no Armazenamento local e salvos no contexto")
         }else{
-          console.log("Nenhum dado encontrado no Armazenamento local")
+          console.log("Nenhum dado encontrado no Armazenamento local") 
         }
         
       }
     fetchUser();
   }, []); // Dependências vazias para executar apenas uma vez no montar do componente
+  
+ // Segundo useEffect: Atualiza o AsyncStorage quando o estado user for alterado, mas não se a alteração vier do useEffect acima
+ const isInitialMount = useRef(true);
 
-  // Atualiza o AsyncStorage quando o estado user for alterado, mas não se a alteração vier do useEffect acima
-  useEffect(() => {
-    const fetchUser = async () => {
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-    };
+ useEffect(() => {
+   if (isInitialMount.current) {
+     isInitialMount.current = false;
+   } else {
+     const fetchUser = async () => {
+       await AsyncStorage.setItem('user', JSON.stringify(user));
+     };
 
-    fetchUser();
-  }, [user]);
+     console.log('Dados do contexto salvo no armazenamento local');
+
+     fetchUser();
+   }
+ }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, setUser, roomData, setRoomData }}>

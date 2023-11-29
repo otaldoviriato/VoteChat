@@ -15,7 +15,8 @@ export default function MenuBtn({children}) {
 
   const { setUser, user } = useContext(AuthContext)
 
-  async function deslogar () {
+  function deslogar () {
+    console.log("Token REMOVIDO")
     setUser({token: null, name: null, email: null, profilePicture: null })
   }
 
@@ -34,7 +35,7 @@ export default function MenuBtn({children}) {
       <MenuItem onPress={hideMenu}>Menu item 2</MenuItem>
       <MenuItem disabled>Disabled item</MenuItem>
       <MenuDivider />
-      <MenuItem onPress={deslogar}>Logout</MenuItem>
+      <MenuItem onPress={deslogar}>Reset Token</MenuItem>
     </Menu>
   </View>
   );

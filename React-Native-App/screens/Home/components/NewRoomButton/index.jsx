@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../../../context/authContext'
 import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { API_URL } from '../../../../constants';
 

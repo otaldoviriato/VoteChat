@@ -64,6 +64,12 @@ function RoomsList() {
 
         setRoomData(res.data.roomData)
 
+        if (!user.token) {
+          console.log("Novo usuário criado com sucesso")
+          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
+          console.log("Token do novo usuário armazenado no contexto")
+        }
+
         console.log("Lista de salas carregada para o token: "+user.token)
       })
       .catch((err) => console.error('Error listing room:', err))
@@ -71,10 +77,8 @@ function RoomsList() {
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-    if (user?.token) {
         console.log("Buscando lista de salas")
         request();
-      }
   }, [user.token]);
   
   return (
