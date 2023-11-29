@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons'
 // Import das screens
 import ListRoomsScreen from '../../../screens/Home'
 import RoomDetailsScreen from '../../../screens/RoomDetails'
-import ListPendingScreen from '../../../screens/Pending'
+import ListVotationsScreen from '../../../screens/Votations'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 import UserProfile from '../../../screens/UserProfile'
 import MenuBtn from '../../../screens/Home/components/MenuButton';
@@ -35,7 +35,7 @@ const StackNavigator = () => {
         ),
       }} />
       <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{ title: 'Grupo X' }} />
-      <Stack.Screen name="ListaDePendentes" component={ListPendingScreen} options={{ title: 'Pendentes' }} />
+      <Stack.Screen name="ListaDeVotações" component={ListVotationsScreen} options={{ title: 'Votações Pendentes' }} />
       <Stack.Screen name="RequisitosDaSala" component={RoomRequirementsScreen} options={{ title: 'Requisitos para entrar na Sala' }} />
       <Stack.Screen name="PerfilDoUsuario" component={UserProfile} options={{ title: 'Perfil' }} />
       {/* Adicione outras telas que deseja navegar aqui, se necessário */}

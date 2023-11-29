@@ -1,6 +1,6 @@
 import { View, StyleSheet, Button } from 'react-native'
-import ListaPendentes from './components/ListaPendentes'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import VotationsList from './components/votationsList'
 
 export default function Pendentes() {
   const navigation = useNavigation()
@@ -10,15 +10,15 @@ export default function Pendentes() {
   const { data } = route.params
 
   return (
-  <>
-    <View style={styles.container}>
-      <ListaPendentes data={data}/>
-      <Button
-              title="Voltar"
-              onPress={() => navigation.goBack()}
-          />
-    </View>
-  </>
+    <>
+      <View style={styles.container}>
+        <VotationsList id_sala={data._id} />
+        <Button
+          title="Voltar"
+          onPress={() => navigation.goBack()}
+        />
+      </View>
+    </>
   )
 }
 
