@@ -74,7 +74,7 @@ function RoomsList() {
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-    if (user.token) {
+    if (user?.token) {
         console.log("Buscando lista de salas")
         request();
       }
