@@ -1,20 +1,31 @@
 import { connectMongoDB } from "../../../../lib/mongodb"
 import { NextResponse } from "next/server"
 import Salas from "../../../../models/salas"
-import verifyToken from "../../verifyTokenFunction"
+import User from "../../../../models/user"
+import jwt from 'jsonwebtoken'
 
 export async function POST(req) {
   try {
-    const authorizationHeader = req.headers.get('authorization')
-    console.log(req.headers.get('authorization'))
-    const res = await verifyToken(authorizationHeader)
-    const id_user = res.id.id_user
+    let id_user, newUserToken
 
-    
+    // Verifica se recebeu o token e decide se decodifica ou cria um novo usuário
+    if (req.headers.get('authorization')) {
+      // Decodifica o token
+      id_user = jwt.verify(req.headers.get('authorization'), process.env.SECRET_KEY).id_user;
+    } else {
+      const createdUser = await User.create({});
+      id_user = createdUser._id;
+
+      // Se o token não existe, cria um novo
+      newUserToken = jwt.sign({ id_user }, process.env.SECRET_KEY);
+    }
+
     const data = await req.json()
     const id_sala = data.id_sala
     const pedidoEm = data.pedidoEm
-    const answer = data.answer
+    const action = data.action
+    const actionData = data.actionData
+    const actionDescription = data.actionDescription
     await connectMongoDB()
 
     // Procurar a sala pelo id_sala
@@ -33,15 +44,12 @@ export async function POST(req) {
     } else {
 
       // Adicionar o usuário na lista de pendentes
-      sala.pendentes.push({
-        id_user: id_user,
+      sala.votations.push({
+        id_solicitante: id_user,
         pedidoEm: pedidoEm,
-        dados: [
-          {
-            answers: answer,
-            picture: null, // Se necessário, adicione a lógica para incluir uma imagem
-          },
-        ],
+        action: action,
+        actionData: id_user,
+        actionDescription: actionDescription,
       })
 
       // Salvar as alterações no banco de dados

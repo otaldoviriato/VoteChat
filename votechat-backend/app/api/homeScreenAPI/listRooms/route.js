@@ -5,8 +5,8 @@ import User from "../../../../models/user"
 import jwt from 'jsonwebtoken'
 
 export async function POST(req) {
-    let id_user;
-    let newUserToken;
+    let id_user
+    let newUserToken
 
     await connectMongoDB()
 
@@ -31,7 +31,7 @@ export async function POST(req) {
         */
 
         //Devolve as informações como resposta da requisição
-        return NextResponse.json(salasUsuario)
+        return NextResponse.json({roomData: salasUsuario, token: newUserToken})
     } catch (error) {
         console.log(error)
         return NextResponse.json({ message: error, success: false });
