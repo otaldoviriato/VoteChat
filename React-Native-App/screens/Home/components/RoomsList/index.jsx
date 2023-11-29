@@ -61,14 +61,12 @@ function RoomsList() {
 
     await axios.post(url, body, headers)
       .then((res) => {
-        setRoomData(res.data.roomData)
-        console.log("aaaaaaaaaaaaa:" + user.token)
         if (!user.token) {
-          setUser(prevUser => ({
-            ...prevUser,
-            token: res.data.token
-          }))
+          console.log("Novo usuário criado com sucesso")
+          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
+          console.log("Token do novo usuário armazenado no contexto")
         }
+        setRoomData(res.data.roomData)
         console.log("Lista de salas carregada para o token: "+user.token)
       })
       .catch((err) => console.error('Error listing room:', err))
@@ -76,16 +74,10 @@ function RoomsList() {
 
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-    if (user) {
-      const isTokenNullOrUndefined = user.token === null || user.token === undefined;
-  
-      // Se user.token não é null ou undefined, ou se já é null, faz a chamada para a API
-      if (!isTokenNullOrUndefined) {
+    if (user.token) {
+        console.log("Buscando lista de salas")
         request();
-      } else {
-        console.log("user.token é null ou undefined, aguardando atualização...");
       }
-    }
   }, [user.token]);
   
   return (

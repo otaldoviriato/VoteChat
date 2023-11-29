@@ -18,7 +18,7 @@ export default function MenuBtn({children}) {
   const { setUser, user } = useContext(AuthContext)
 
   async function deslogar () {
-    await AsyncStorage.removeItem('user1')
+    await AsyncStorage.removeItem('user')
     setUser(null)
   }
 

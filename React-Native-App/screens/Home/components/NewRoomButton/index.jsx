@@ -19,6 +19,7 @@ export default function NewRoomButton() {
   const navigation = useNavigation()
 
   const request = async () => {    
+    console.log(user.token || '')
     const url = API_URL+"api/homeScreenAPI/createRoom"
 
     const headers = {
@@ -35,11 +36,11 @@ export default function NewRoomButton() {
     await axios.post(url, body, headers)
       .then(async (res) => {
         closeModal()
+        console.log("Sala "+roomName+" criada com sucesso!")
         if (!user.token) {
-          setUser(prevUser => ({
-            ...prevUser,
-            token: res.data.token
-          }))
+          console.log("Novo usuário criado com sucesso")
+          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
+          console.log("Token do novo usuário armazenado no contexto")
         }
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
       }).catch((err) => console.error('Error creating room:', err))

@@ -6,32 +6,28 @@ export const AuthContext = createContext()
 function AuthProvider({ children }) {
   const [user, setUser] = useState({token: null, name: null, email: null, profilePicture: null })
   const [roomData, setRoomData] = useState([])
-  const isFetchingUserRef = useRef(false);
 
   // Atualiza o estado user com o token do usuário caso o mesmo já esteja logado.
   useEffect(() => {
     const fetchUser = async () => {
-      // Verifica se o useEffect está sendo chamado internamente
-      if (!isFetchingUserRef.current) {
-        const storedUser = await AsyncStorage.getItem('user1');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+        console.log("Buscando informações do usuário no Armazenamento local")
+        const storedUser = await AsyncStorage.getItem('user')
+        const storedUserParse = JSON.parse(storedUser)
+        if (storedUserParse?.token) {
+          console.log("Dados encontrados: " + storedUserParse);
+          console.log("Dadis armazenados no Armazenamento local")
+        }else{
+          console.log("Nenhum dado encontrado no Armazenamento local")
         }
-        console.log("Esse é o token: " + storedUser);
+        
       }
-    };
- 
     fetchUser();
   }, []); // Dependências vazias para executar apenas uma vez no montar do componente
 
   // Atualiza o AsyncStorage quando o estado user for alterado, mas não se a alteração vier do useEffect acima
   useEffect(() => {
     const fetchUser = async () => {
-      // Marca que o useEffect está sendo chamado internamente
-      isFetchingUserRef.current = true;
-      await AsyncStorage.setItem('user1', JSON.stringify(user));
-      // Reseta a marca após a execução do AsyncStorage
-      isFetchingUserRef.current = false;
+      await AsyncStorage.setItem('user', JSON.stringify(user));
     };
 
     fetchUser();
