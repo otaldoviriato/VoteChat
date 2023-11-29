@@ -9,32 +9,24 @@ const mensagemSchema = new Schema(
   { timestamps: true }
 )
 
-const votationsSchema = new Schema(
-{
-      pedidoEm: { type: Date, required: true },
-      id_user: { type: Schema.Types.ObjectId, ref: 'User' },
-      votos: [
-        {
-          type: new mongoose.Schema({
-            favoravel: { type: Boolean, required: true },
-            id_user: { type: Schema.Types.ObjectId, ref: 'User' },
-          },
-            { timestamps: true }
-          ),
-        },
-      ],
-      dados: [
-        {
-            type: new mongoose.Schema({
-            answers: { type: String, required: false },
-            picture: {type: String, required: false }
-          },
-            { timestamps: true } 
-          ),
-        },
-      ],
-    },
-    { timestamps: true },
+const votoSchema = new mongoose.Schema(
+  {
+    favoravel: { type: Boolean, required: true },
+    id_votante: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  },
+  { timestamps: true }
+)
+
+const votationsSchema = new mongoose.Schema(
+  {
+    pedidoEm: { type: Date, required: true },
+    id_solicitante: { type: Schema.Types.ObjectId, ref: 'User' },
+    votos: [votoSchema],
+    action: { type: String, required: true },
+    actionData: { type: String, required: true },
+    actionDescription: { type: String, required: true },
+  },
+  { timestamps: true }
 )
 
 const salaSchema = new Schema(
@@ -47,7 +39,7 @@ const salaSchema = new Schema(
       },
     ],
     mensagens: [mensagemSchema],
-    votations: [votingSchema],
+    votations: [votationsSchema],
   },
   { timestamps: true }
 )
