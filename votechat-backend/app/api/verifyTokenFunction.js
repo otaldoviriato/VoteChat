@@ -14,6 +14,6 @@ export default async function verifyToken(token) {
         //Cria o dado no MongoDB
         const createdUser = await User.create({})
 
-        return { id_user: createdUser._id, token: jwt.sign({ id_user }, process.env.SECRET_KEY) }
+        return { id_user: createdUser._id, token: jwt.sign( createdUser._id.toJSON() , process.env.SECRET_KEY) }
     }
 }

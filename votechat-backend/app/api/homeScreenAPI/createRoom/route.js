@@ -1,8 +1,6 @@
 import { connectMongoDB } from "../../../../lib/mongodb"
 import Salas from "../../../../models/salas"
-import User from "../../../../models/user"
 import { NextResponse } from "next/server"
-import jwt from 'jsonwebtoken'
 import verifyToken from "../../verifyTokenFunction"
 
 export async function POST(req) {
