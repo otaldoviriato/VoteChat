@@ -6,6 +6,7 @@ import { COLORS } from '../../../../theme/colors'
 import { API_URL } from '../../../../constants';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import storeAndSetToken from '../../../../commom/utils/functions/storeAndSetToken'
 
 const ContainerView = styled.View`
   background-color: gray;
@@ -46,7 +47,7 @@ const Item = ({ data }) => {
 }
 
 function RoomsList() {
-  const { user, setUser, roomData, setRoomData, token } = useContext(AuthContext)
+  const { user, roomData, setRoomData, token, setToken } = useContext(AuthContext)
 
   const request = async () => {
     const url = API_URL+'api/homeScreenAPI/listRooms'
@@ -63,10 +64,7 @@ function RoomsList() {
 
         setRoomData(res.data.roomData)
 
-        if (!token) {
-          setToken(res.data.token)
-          console.log("Token do NOVO usuário armazenado no contexto")
-        }
+        storeAndSetToken(res.data.token, setToken)
 
         console.log("Lista de salas carregada para o token: "+token)
       })

@@ -5,6 +5,7 @@ import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'reac
 import { AntDesign } from '@expo/vector-icons'
 import axios from 'axios'
 import { API_URL } from '../../../../constants';
+import storeAndSetToken from '../../../../commom/utils/functions/storeAndSetToken'
 
 export default function NewRoomButton() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -13,7 +14,7 @@ export default function NewRoomButton() {
   const [error, setError] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { user, setUser, setRoomData, token, setToken } = useContext(AuthContext)
+  const { setRoomData, token, setToken } = useContext(AuthContext)
 
   const navigation = useNavigation()
 
@@ -36,10 +37,7 @@ export default function NewRoomButton() {
         closeModal()
         console.log("Sala "+roomName+" criada com sucesso!")
         
-        if (!token) {
-          setToken(res.data.token)
-          console.log("Token do NOVO usuário armazenado no contexto")
-        }
+        storeAndSetToken(res.data.token, setToken)
         
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
       }).catch((err) => console.error('Error creating room:', err))

@@ -24,8 +24,8 @@ function AuthProvider({ children }) {
     const fetchUser = async () => {
         console.log("Buscando informações do usuário no Armazenamento local")
 
-        const storedUser = JSON.parse(await AsyncStorage.getItem('user'));
-        const storedToken = await AsyncStorage.getItem('token')
+        const storedUser = JSON.parse(await AsyncStorage.getItem('user'))
+        const storedToken = JSON.parse(await AsyncStorage.getItem('token'))
         
         if (storedToken) {
           setToken(storedToken)
@@ -37,45 +37,6 @@ function AuthProvider({ children }) {
       }
     fetchUser();
   }, []); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
- const isInitialMount = useRef(true);
-
- useEffect(() => {
-   if (isInitialMount.current) {
-     isInitialMount.current = false;
-   } else {
-     const fetchUser = async () => {
-       await AsyncStorage.setItem('user', JSON.stringify(user));
-     };
-
-     console.log('Dados do contexto salvo no armazenamento local');
-
-     fetchUser();
-   }
- }, [user]);
-
-
-
-
-
-
-
-
-
 
 
 

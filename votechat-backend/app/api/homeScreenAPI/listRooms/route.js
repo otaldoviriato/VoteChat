@@ -14,7 +14,6 @@ export async function POST(req) {
         //Busca os dados no MongoDB
         const salasUsuario = await Salas.find({ 'members.id_user': id_user }).exec()
 
-
         /*
             Tratar os dados de sala para que sejam devolvidos com os dados de cada usuário.
         */
