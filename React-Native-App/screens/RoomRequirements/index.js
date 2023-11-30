@@ -8,7 +8,7 @@ import { API_URL } from '../../constants'
 
 
 export default function RoomRequirementsScreen({ route }) {
-  const { user } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
   const [mensagem, setMensagem] = useState('')
   const [answer, setAnswer] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
@@ -44,7 +44,7 @@ export default function RoomRequirementsScreen({ route }) {
       const headers = {
         headers: {
           "Content-Type": "application/json",
-           'Authorization': `${user.token || ''}`
+           'Authorization': `${token || ''}`
         }
       }
       const body = {
@@ -66,7 +66,7 @@ export default function RoomRequirementsScreen({ route }) {
     const headers = {
       headers: {
         "Content-Type": "application/json",
-         'Authorization': `${user.token || ''}`
+         'Authorization': `${token || ''}`
       }
     }
     const body = {

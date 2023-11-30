@@ -13,18 +13,17 @@ export default function NewRoomButton() {
   const [error, setError] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { user, setUser, setRoomData } = useContext(AuthContext)
+  const { user, setUser, setRoomData, token, setToken } = useContext(AuthContext)
 
   const navigation = useNavigation()
 
   const request = async () => {    
-    console.log(user.token || '')
     const url = API_URL+"api/homeScreenAPI/createRoom"
 
     const headers = {
       headers: {
         "Content-Type": "application/json",
-         'Authorization': `${user.token || ''}`
+         'Authorization': `${token || ''}`
       }
     }
     const body = {
@@ -37,10 +36,9 @@ export default function NewRoomButton() {
         closeModal()
         console.log("Sala "+roomName+" criada com sucesso!")
         
-        if (!user.token) {
-          console.log("Novo usuário criado com sucesso")
-          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
-          console.log("Token do novo usuário armazenado no contexto")
+        if (!token) {
+          setToken(res.data.token)
+          console.log("Token do NOVO usuário armazenado no contexto")
         }
         
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])

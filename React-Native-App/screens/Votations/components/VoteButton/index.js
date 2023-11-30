@@ -4,7 +4,7 @@ import { AuthContext } from '../../../../context/authContext';
 import { API_URL } from '../../../../constants'
 
 export default function VoteButton({ id_sala, id_votado }) {
-  const { user } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
 
   const handleSubmit = async (voto) => {
 
@@ -13,7 +13,7 @@ export default function VoteButton({ id_sala, id_votado }) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-           'Authorization': `${user.token || ''}`,
+           'Authorization': `${token || ''}`,
         },
         body: JSON.stringify({
           id_sala: id_sala,

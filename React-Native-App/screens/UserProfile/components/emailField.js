@@ -8,14 +8,14 @@ export default function EmailField() {
     const [isEditingEmail, setIsEditingEmail] = useState(false);
     const [newEmail, setNewEmail] = useState('');
 
-    const { user, setUser } = useContext(AuthContext)
+    const { user, setUser, token } = useContext(AuthContext)
 
     const request = async () => {
         const url = API_URL + 'api/userProfileScreenAPI/updateUser'
         const headers = {
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `${user.token || ''}`
+                'Authorization': `${token || ''}`
             }
         }
         const body = { newEmail }

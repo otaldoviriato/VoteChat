@@ -7,7 +7,7 @@ import { AuthContext } from '../../../../context/authContext';
 import axios from 'axios'
 
 export default function votaionList (props) {
-    const { user } = useContext(AuthContext)
+    const { token } = useContext(AuthContext)
 
     const [votations, setVotations] = useState([])
     const id_sala = props.id_sala
@@ -18,7 +18,7 @@ export default function votaionList (props) {
             const headers = {
               headers: {
                 "Content-Type": "application/json",
-                 'Authorization': `${user.token || ''}`
+                 'Authorization': `${token || ''}`
               }
             }
             const body = { id_sala }

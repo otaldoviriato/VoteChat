@@ -7,7 +7,7 @@ export default function ImageField() {
     const [selectedImage, setSelectedImage] = useState(null)
     const [isEditingPicture, setIsEditingPicture] = useState(false)
 
-    const { user } = useContext(AuthContext)
+    const { user, token } = useContext(AuthContext)
 
     const handleImagePicker = async () => {
         try {
@@ -38,7 +38,7 @@ export default function ImageField() {
         const headers = {
             headers: {
                 "Content-Type": "application/json",
-                'Authorization': `${user.token || ''}`
+                'Authorization': `${token || ''}`
             }
         }
         const body = { selectedImage }

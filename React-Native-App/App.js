@@ -1,6 +1,6 @@
 import React from 'react'
 import AuthProvider from './context/authContext'
-import NavigatorComponent from './Navigator'
+import NavigatorComponent from './navigator'
 
 export default function App() {
 

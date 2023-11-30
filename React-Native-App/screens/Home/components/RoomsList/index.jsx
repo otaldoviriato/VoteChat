@@ -26,15 +26,14 @@ const NoRoomsText = styled.Text`
 
 const Item = ({ data }) => {
 
-  const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
+  const navigation = useNavigation() 
 
   const handlePress = () => {
-    // Navegue para a tela desejada quando o item for pressionado
     navigation.navigate('DetalhesDaSala', { data })
   }
 
   if (!data) {
-    return null // ou qualquer lógica para lidar com dados ausentes
+    return null 
   }
 
   return (
@@ -47,14 +46,14 @@ const Item = ({ data }) => {
 }
 
 function RoomsList() {
-  const { user, setUser, roomData, setRoomData } = useContext(AuthContext)
+  const { user, setUser, roomData, setRoomData, token } = useContext(AuthContext)
 
   const request = async () => {
     const url = API_URL+'api/homeScreenAPI/listRooms'
     const headers = {
       headers: {
         "Content-Type": "application/json",
-         'Authorization': `${user.token || ''}`
+         'Authorization': `${token || ''}`
       }
     }
     const body = {}
@@ -64,22 +63,31 @@ function RoomsList() {
 
         setRoomData(res.data.roomData)
 
-        if (!user.token) {
-          console.log("Novo usuário criado com sucesso")
-          setUser(prevUser => ({ ...prevUser, token: res.data.token }))
-          console.log("Token do novo usuário armazenado no contexto")
+        if (!token) {
+          setToken(res.data.token)
+          console.log("Token do NOVO usuário armazenado no contexto")
         }
 
-        console.log("Lista de salas carregada para o token: "+user.token)
+        console.log("Lista de salas carregada para o token: "+token)
       })
       .catch((err) => console.error('Error listing room:', err))
   }
 
+
+
+
+
   // Chamada sempre que houver mudança em user
   useEffect(() => {
-        console.log("Buscando lista de salas")
-        request();
-  }, [user.token]);
+    if(token){
+      console.log("Buscando lista de salas")
+      request();
+    }
+  }, [token]);
+
+
+
+
   
   return (
     <SafeAreaView style={styles.container}>
