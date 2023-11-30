@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import { Menu, MenuItem } from 'react-native-material-menu';
 import { useNavigation } from '@react-navigation/native'
 
-export default function MenuHome({children}) {
+export default function MenuRoom({children, data}) {
   const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false);
@@ -19,7 +19,7 @@ export default function MenuHome({children}) {
       anchor={<Text onPress={showMenu}>{children}</Text>}
       onRequestClose={hideMenu}
     >
-      <MenuItem onPress={() => navigation.navigate('PerfilDoUsuario')}>Perfil</MenuItem>
+      <MenuItem onPress={() => navigation.navigate('ListaDeVotações', { data })}>Lista de Pendentes</MenuItem>
     </Menu>
   </View>
   );

@@ -9,7 +9,8 @@ import RoomDetailsScreen from '../../../screens/RoomDetails'
 import ListVotationsScreen from '../../../screens/Votations'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 import UserProfile from '../../../screens/UserProfile'
-import MenuBtn from '../../../screens/Home/components/MenuButton';
+import MenuHome from '../../../screens/Home/components/MenuButton';
+import MenuRoom from '../../../screens/RoomDetails/components/menuButton';
 
 const Stack = createNativeStackNavigator()
 
@@ -28,13 +29,30 @@ const StackNavigator = () => {
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            <MenuBtn >
+            <MenuHome >
               <AntDesign name="bars" size={24} color="white" />
-            </MenuBtn>
+            </MenuHome>
           </View>
         ),
       }} />
-      <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={{ title: 'Grupo X' }} />
+      <Stack.Screen name="DetalhesDaSala" component={RoomDetailsScreen} options={({ route }) => ({
+        title: 'Vote Chat',
+        headerStyle: {
+          backgroundColor: '#1B96F6',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerRight: () => (
+          <View style={{ marginRight: 10 }}>
+            {/* Passe a prop 'data' para o componente MenuRoom */}
+            <MenuRoom data={route.params.data}>
+              <AntDesign name="bars" size={24} color="white" />
+            </MenuRoom>
+          </View>
+        ),
+      })} />
       <Stack.Screen name="ListaDeVotações" component={ListVotationsScreen} options={{ title: 'Votações Pendentes' }} />
       <Stack.Screen name="RequisitosDaSala" component={RoomRequirementsScreen} options={{ title: 'Requisitos para entrar na Sala' }} />
       <Stack.Screen name="PerfilDoUsuario" component={UserProfile} options={{ title: 'Perfil' }} />
