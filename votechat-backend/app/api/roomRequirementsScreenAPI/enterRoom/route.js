@@ -1,32 +1,18 @@
 import { connectMongoDB } from "../../../../lib/mongodb"
 import { NextResponse } from "next/server"
 import Salas from "../../../../models/salas"
-import User from "../../../../models/user"
-import jwt from 'jsonwebtoken'
+import verifyToken from "../../verifyTokenFunction"
 
 export async function POST(req) {
   try {
-    let id_user, newUserToken
+    //Acessa os dados da function verifyToken
+    const { id_user, token } = await verifyToken(req.headers.get('authorization'))
 
-    // Verifica se recebeu o token e decide se decodifica ou cria um novo usuário
-    if (req.headers.get('authorization')) {
-      // Decodifica o token
-      id_user = jwt.verify(req.headers.get('authorization'), process.env.SECRET_KEY).id_user;
-    } else {
-      const createdUser = await User.create({});
-      id_user = createdUser._id;
-
-      // Se o token não existe, cria um novo
-      newUserToken = jwt.sign({ id_user }, process.env.SECRET_KEY);
-    }
-
-    const data = await req.json()
-    const id_sala = data.id_sala
-    const pedidoEm = data.pedidoEm
-    const action = data.action
-    const actionData = data.actionData
-    const actionDescription = data.actionDescription
+    //Conecta ao MongoDB
     await connectMongoDB()
+
+    //Acessa os dados do corpo da requisição
+    const { id_sala, pedidoEm, action, actionData, actionDescription } = await req.json()
 
     // Procurar a sala pelo id_sala
     const sala = await Salas.findById(id_sala)
@@ -40,10 +26,11 @@ export async function POST(req) {
     const pendenteEncontrado = sala.pendentes && sala.pendentes.find(pendente => pendente.id_user && pendente.id_user.toString() === id_user.toString())
 
     if (membroEncontrado || pendenteEncontrado) {
-      return NextResponse.json({ status: 401 });
+      return NextResponse.json({ status: 401 })
+
     } else {
 
-      // Adicionar o usuário na lista de pendentes
+      // Adicionar o usuário na lista de votations
       sala.votations.push({
         id_solicitante: id_user,
         pedidoEm: pedidoEm,
