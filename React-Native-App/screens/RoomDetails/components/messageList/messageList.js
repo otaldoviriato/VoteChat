@@ -11,7 +11,7 @@ const socket = io.connect(API_URL)
 
 const MessageList = (props) => {
   const [oldMessages, setOldMessages] = useState([])
-  const { user } = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
   id_sala = props.data._id
 
   useEffect(() => {
@@ -20,9 +20,10 @@ const MessageList = (props) => {
       const headers = {
         headers: {
           "Content-Type": "application/json",
+           'Authorization': `${token || ''}`
         }
       }
-      const body = {id_sala, token_user: user}
+      const body = {id_sala}
 
       await axios.post(url, body, headers)
         .then((res) => {

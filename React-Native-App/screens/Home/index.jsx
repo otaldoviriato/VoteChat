@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import RoomsList from './components/RoomsList';
-import NewRoomButton from './components/NewRoomButton';
-import Temporary from './temporary';
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import RoomsList from './components/RoomsList'
+import NewRoomButton from './components/NewRoomButton'
+import Temporary from './temporary'
 
 export default function ListRoomsScreen() {
 
@@ -14,7 +14,7 @@ export default function ListRoomsScreen() {
         <NewRoomButton />
       </View>
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

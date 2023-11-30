@@ -1,14 +1,18 @@
 import { connectMongoDB } from "../../../../lib/mongodb"
 import Salas from "../../../../models/salas"
 import { NextResponse } from "next/server"
-import jwt from 'jsonwebtoken'
+import verifyToken from "../../verifyTokenFunction"
 
 export async function POST(req) {
   try {
-    const id_user = jwt.verify(req.headers.get('authorization'), process.env.SECRET_KEY).id_user
+    //Acessa os dados da function verifyToken
+    const { id_user, token } = await verifyToken(req.headers.get('authorization'))
 
-    const { id_sala, id_votado, voto } = await req.json()
+    //Conecta ao MongoDB
     await connectMongoDB()
+
+    //Acessa os dados do corpo da requisição
+    const { id_sala, id_votado, voto } = await req.json()
 
     // Procurar a sala pelo id_sala
     const sala = await Salas.findById(id_sala)
@@ -29,7 +33,6 @@ export async function POST(req) {
       favoravel: voto,
       id_votante: id_user,
     })
-    console.log(id_user)
 
     // Salvar as alterações no banco de dados
     const updatedSala = await sala.save()

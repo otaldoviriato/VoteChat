@@ -5,16 +5,15 @@ import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  let id_user;
-
-  await connectMongoDB();
-
   try {
+    //Acessa os dados da function verifyToken
+    const { id_user, token } = await verifyToken(req.headers.get('authorization'))
+
+    //Conecta ao MongoDB
+    await connectMongoDB()
+    
     // Acessa os dados do corpo da requisição
     const { id_sala, token_user } = await req.json();
-
-    // Decodifica o token
-    id_user = jwt.verify(token_user, process.env.SECRET_KEY).id_user;
 
     // Busca os dados no MongoDB
     const roomDetails = await Salas.findById(id_sala).exec();
