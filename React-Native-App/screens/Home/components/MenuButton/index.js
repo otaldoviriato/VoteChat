@@ -12,17 +12,6 @@ export default function MenuBtn({children}) {
 
   const navigation = useNavigation();
 
-  const { setUser, user } = useContext(AuthContext)
-
-  function deslogar () {
-    console.log("Token REMOVIDO")
-    setUser({token: null, name: null, email: null, profilePicture: null })
-  }
-
-  function openConfig () {
-    navigation.navigate('PerfilDoUsuario')
-  }
-
   return (
     <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
     <Menu

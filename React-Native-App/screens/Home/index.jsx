@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import RoomsList from './components/RoomsList'
 import NewRoomButton from './components/NewRoomButton'
 import Temporary from './temporary'
@@ -8,7 +8,7 @@ export default function ListRoomsScreen() {
 
   return (
     <>
-      <View style={styles.container}>
+      <View className="flex-1 bg-[#EEF7FE]">
         <RoomsList />
         <Temporary />
         <NewRoomButton />
@@ -16,10 +16,3 @@ export default function ListRoomsScreen() {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#9AD1FB',
-  },
-})
