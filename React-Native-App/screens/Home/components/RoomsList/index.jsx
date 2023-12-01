@@ -55,11 +55,6 @@ export default function RoomsList() {
       .catch((err) => console.error('Error listing room:', err))
   }
 
-
-
-
-
-  // Chamada sempre que houver mudança em user
   useEffect(() => {
     if(token){
       console.log("Buscando lista de salas")

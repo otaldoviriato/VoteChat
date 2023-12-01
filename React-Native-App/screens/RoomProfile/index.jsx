@@ -18,7 +18,6 @@ export default function RoomDetails() {
     await Clipboard.setStringAsync(link)
   }
 
-  
   return (
     <View style={styles.container}>
       

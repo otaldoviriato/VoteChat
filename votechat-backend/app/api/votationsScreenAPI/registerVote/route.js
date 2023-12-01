@@ -35,7 +35,7 @@ export async function POST(req) {
     })
 
     // Salvar as alterações no banco de dados
-    const updatedSala = await sala.save()
+    const updatedSala = await sala.save()    
 
     return NextResponse.json(updatedSala)
   } catch (error) {

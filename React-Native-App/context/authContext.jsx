@@ -8,18 +8,6 @@ function AuthProvider({ children }) {
   const [token, setToken] = useState()
   const [roomData, setRoomData] = useState([])
 
-
-
-
-
-
-
-
-
-
-
-
-
   useEffect(() => {
     const fetchUser = async () => {
         console.log("Buscando informações do usuário no Armazenamento local")
@@ -37,10 +25,6 @@ function AuthProvider({ children }) {
       }
     fetchUser();
   }, []); 
-
-
-
-
 
   return (
     <AuthContext.Provider value={{ user, setUser, roomData, setRoomData, token, setToken }}>

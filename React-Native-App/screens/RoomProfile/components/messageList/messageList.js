@@ -16,7 +16,7 @@ const MessageList = (props) => {
 
   useEffect(() => {
     const request = async () => {
-      const url = API_URL+'/api/roomDetailsScreenAPI/messageDetails'
+      const url = API_URL+'/api/roomProfileScreenAPI/messageDetails'
       const headers = {
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const MessageList = (props) => {
         .then((res) => {
           setOldMessages(res.data.mensagens)
         })
-        .catch((err) => console.error('Error creating room:', err))
+        .catch((err) => console.error('Error listing mesages:', err))
     } 
 
    request()
