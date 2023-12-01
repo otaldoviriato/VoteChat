@@ -1,27 +1,15 @@
-import React, { useState, useContext } from 'react'
-import { View, Text } from 'react-native'
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu'
+import React, { useState, useContext } from 'react';
+import { View, Text } from 'react-native';
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import { useNavigation } from '@react-navigation/native'
 
-export default function MenuBtn({children}) {
+export default function MenuHome({children}) {
   const [visible, setVisible] = useState(false);
 
-  const hideMenu = () => setVisible(false)
-
-  const showMenu = () => setVisible(true)
+  const hideMenu = () => setVisible(false);
+  const showMenu = () => setVisible(true);
 
   const navigation = useNavigation();
-
-  const { setUser, user } = useContext(AuthContext)
-
-  function deslogar () {
-    console.log("Token REMOVIDO")
-    setUser({token: null, name: null, email: null, profilePicture: null })
-  }
-
-  function openConfig () {
-    navigation.navigate('PerfilDoUsuario')
-  }
 
   return (
     <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
@@ -33,5 +21,5 @@ export default function MenuBtn({children}) {
       <MenuItem onPress={() => navigation.navigate('PerfilDoUsuario')}>Perfil</MenuItem>
     </Menu>
   </View>
-  )
+  );
 }
