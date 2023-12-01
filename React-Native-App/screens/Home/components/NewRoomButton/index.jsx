@@ -36,8 +36,8 @@ export default function NewRoomButton() {
       .then(async (res) => {
         closeModal()
         console.log("Sala "+roomName+" criada com sucesso!")
-        
-        storeAndSetToken(res.data.token, setToken)
+
+        if(!token){storeAndSetToken(res.data.token, setToken)}        
         
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
       }).catch((err) => console.error('Error creating room:', err))

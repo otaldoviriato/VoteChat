@@ -1,29 +1,10 @@
-import React, { useEffect, useContext, useRef } from 'react'
-import { SafeAreaView, FlatList, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import styled from 'styled-components/native'
+import React, { useEffect, useContext } from 'react'
+import { SafeAreaView, View, FlatList, Text, TouchableOpacity, Image } from 'react-native'
 import { AuthContext } from '../../../../context/authContext'
-import { COLORS } from '../../../../theme/colors'
 import { API_URL } from '../../../../constants';
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import storeAndSetToken from '../../../../commom/utils/functions/storeAndSetToken'
-
-const ContainerView = styled.View`
-  background-color: gray;
-  margin-bottom: 20px;
-  min-height: 80px;
-  width: 100%;
-  border-radius: 5px;
-`
-
-const NoRoomsText = styled.Text`
-  min-height: 80px;
-  width: 100%;
-  padding-top: 50%;
-  text-align: center;
-  font-size: 24px;
-  color: ${COLORS.white};
-`
 
 const Item = ({ data }) => {
 
@@ -38,15 +19,18 @@ const Item = ({ data }) => {
   }
 
   return (
-    <TouchableOpacity onPress={handlePress}>
-      <ContainerView>
+    <TouchableOpacity onPress={handlePress} className='h-20 bg-[#cae8ff]'>
+      <View className='flex-row p-4'>
+        <Image 
+        source={require('../../../../assets/default-group.jpg')}
+        className='h-10 w-10 rounded-full mr-3'/>
         <Text>{data.name}</Text>
-      </ContainerView>
+      </View>
     </TouchableOpacity>
   )
 }
 
-function RoomsList() {
+export default function RoomsList() {
   const { user, roomData, setRoomData, token, setToken } = useContext(AuthContext)
 
   const request = async () => {
@@ -83,35 +67,14 @@ function RoomsList() {
 
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       {user && roomData && roomData.length > 0 ? (
         <FlatList
           data={roomData}
           renderItem={({ item }) => <Item data={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
-      ) : (<NoRoomsText>
-        Sem grupos para exibir
-      </NoRoomsText>
-
-      )}
+      ) : (<Text>Sem grupos para exibir</Text>)}
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
-})
-
-export default RoomsList
