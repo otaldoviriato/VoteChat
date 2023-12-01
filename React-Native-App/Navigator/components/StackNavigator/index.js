@@ -10,6 +10,9 @@ import ListVotationsScreen from '../../../screens/Votations'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 import UserProfileScreen from '../../../screens/UserProfile'
 import MenuBtn from '../../../screens/Home/components/MenuButton';
+import UserProfile from '../../../screens/UserProfile'
+import MenuHome from '../../../screens/Home/components/MenuButton';
+import MenuRoom from '../../../screens/RoomDetails/components/menuButton';
 
 const Stack = createNativeStackNavigator()
 
@@ -28,9 +31,9 @@ const StackNavigator = () => {
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            <MenuBtn >
+            <MenuHome >
               <AntDesign name="bars" size={24} color="white" />
-            </MenuBtn>
+            </MenuHome>
           </View>
         ),
       }} />

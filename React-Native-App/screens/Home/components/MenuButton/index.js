@@ -2,16 +2,15 @@ import React, { useState, useContext } from 'react'
 import { View, Text } from 'react-native'
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu'
 import { useNavigation } from '@react-navigation/native'
-import { AuthContext } from '../../../../context/authContext'
 
 export default function MenuBtn({children}) {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const hideMenu = () => setVisible(false)
 
   const showMenu = () => setVisible(true)
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const { setUser, user } = useContext(AuthContext)
 
@@ -31,11 +30,7 @@ export default function MenuBtn({children}) {
       anchor={<Text onPress={showMenu}>{children}</Text>}
       onRequestClose={hideMenu}
     >
-      <MenuItem onPress={openConfig}>Perfil</MenuItem>
-      <MenuItem onPress={hideMenu}>Menu item 2</MenuItem>
-      <MenuItem disabled>Disabled item</MenuItem>
-      <MenuDivider />
-      <MenuItem onPress={deslogar}>Reset Token</MenuItem>
+      <MenuItem onPress={() => navigation.navigate('PerfilDoUsuario')}>Perfil</MenuItem>
     </Menu>
   </View>
   )

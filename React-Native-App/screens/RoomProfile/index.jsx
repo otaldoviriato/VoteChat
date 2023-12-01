@@ -4,24 +4,8 @@ import * as Clipboard from 'expo-clipboard'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import MessageList from './components/messageList/messageList'
 
-const Pendentes = ({ data }) => {
-  const navigation = useNavigation() // Obtenha o objeto de navegação usando o hook useNavigation
+export default function RoomDetails() {
 
-  const handlePress = () => {
-    // Navegue para a tela desejada quando o item for pressionado
-    navigation.navigate('ListaDeVotações', { data })
-  }
-
-  return (
-    <Button
-      title="Ver Pendentes"
-      onPress={handlePress}
-    />
-  )
-}
-
-export default function RoomProfile() {
-  const navigation = useNavigation()
   const route = useRoute()
 
   // Acesse as props da rota
@@ -36,14 +20,10 @@ export default function RoomProfile() {
 
   return (
     <View style={styles.container}>
+      
       <Text>Nome da Sala: {data.name}</Text>
       <TouchableOpacity onPress={copiarLink}><Text>Copiar Link</Text></TouchableOpacity>
       <MessageList data={data} />
-      <Button
-        title="Voltar"
-        onPress={() => navigation.goBack()}
-      />
-      <Pendentes data={data} />
     </View>
   )
 }
