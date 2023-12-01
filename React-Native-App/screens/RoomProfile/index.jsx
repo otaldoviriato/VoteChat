@@ -20,7 +20,7 @@ const Pendentes = ({ data }) => {
   )
 }
 
-export default function RoomDetails() {
+export default function RoomProfile() {
   const navigation = useNavigation()
   const route = useRoute()
 
@@ -34,7 +34,6 @@ export default function RoomDetails() {
     await Clipboard.setStringAsync(link)
   }
 
-  
   return (
     <View style={styles.container}>
       <Text>Nome da Sala: {data.name}</Text>

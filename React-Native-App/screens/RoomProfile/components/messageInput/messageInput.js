@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { View, Button, TextInput, Text, FlatList } from 'react-native'
 import io from 'socket.io-client'
-import MessageDetails from '../messageDetails/messageDetails'
 import { AuthContext } from '../../../../context/authContext'
 import { API_URL } from '../../../../constants'
 
