@@ -23,7 +23,7 @@ app.prepare().then(() => {
 
     socket.on('message', async (data) => {
 
-      const id_user = jwt.verify(data.token, process.env.SECRET_KEY).id_user;
+      const id_user = jwt.verify(data.token, process.env.SECRET_KEY)
 
       try {
 
@@ -34,8 +34,8 @@ app.prepare().then(() => {
         };
 
         const Salas = require('./models/salas');
-        const sala = await Salas.findByIdAndUpdate(
-          id_sala,
+        const sala = await Salas.findOneAndUpdate(
+          { _id: id_sala },
           { $push: { mensagens: mensagemToDB } },
           { new: true }
         );

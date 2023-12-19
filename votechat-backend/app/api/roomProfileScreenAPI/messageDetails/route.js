@@ -1,7 +1,7 @@
 import { connectMongoDB } from "../../../../lib/mongodb";
 import Salas from "../../../../models/salas";
 import User from "../../../../models/user";
-import jwt from "jsonwebtoken";
+import verifyToken from "../../verifyTokenFunction";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -13,7 +13,7 @@ export async function POST(req) {
     await connectMongoDB()
     
     // Acessa os dados do corpo da requisição
-    const { id_sala, token_user } = await req.json();
+    const { id_sala } = await req.json();
 
     // Busca os dados no MongoDB
     const roomDetails = await Salas.findById(id_sala).exec();

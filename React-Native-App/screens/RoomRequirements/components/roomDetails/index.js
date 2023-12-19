@@ -27,23 +27,10 @@ export default function roomDetails(props) {
             }).catch(function (error) { console.error(error) })
     }
 
-    useEffect(() => {
-        console.log("Componente montado");
-
-        // A função de retorno será chamada quando o componente for desmontado
-        return () => {
-            console.log("Componente desmontado");
-        };
-    }, []);
-
-    useEffect(() => {
-        request()
-    }, [props.id_sala])
-
     return (
         <>
-            <Text>Entrar na sala: { roomDetails.name }</Text>
-            <Text>Descrição da Sala: { roomDetails.description }</Text>
+            <Text>Entrar na sala:  </Text>
+            <Text>Descrição da Sala:  </Text>
         </>
     )
 }

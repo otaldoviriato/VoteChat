@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Fontisto } from '@expo/vector-icons'
 // Import das screens
 import Home from '../../../screens/Home'
 import RoomProfileScreen from '../../../screens/RoomProfile'
@@ -17,36 +17,42 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="ListaDeSalas" component={Home} options={{
-        title: 'Vote Chat',
+        title: 'VoteChat',
         headerStyle: {
-          backgroundColor: '#1B96F6',
+          backgroundColor: '#295B80',
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#EEF8FF',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            <MenuHome >
-              <AntDesign name="bars" size={24} color="white" />
-            </MenuHome>
+            <View className="w-81 h-23 top-26 left-40">
+              <MenuHome >
+                <Fontisto name="more-v-a" size={18} color="white" />
+              </MenuHome>
+            </View>
+          </View>
+        ),
+        headerLeft: () => (
+          <View style={{ marginRight: 40 }}>
+
           </View>
         ),
       }} />
       <Stack.Screen name="DetalhesDaSala" component={RoomProfileScreen} options={({ route }) => ({
         title: 'Vote Chat',
         headerStyle: {
-          backgroundColor: '#1B96F6',
+          backgroundColor: '#295B80',
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#EEF8FF',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            {/* Passe a prop 'data' para o componente MenuRoom */}
             <MenuRoom data={route.params.data}>
-              <AntDesign name="bars" size={24} color="white" />
+              <Fontisto name="more-v-a" size={18} color="white" />
             </MenuRoom>
           </View>
         ),

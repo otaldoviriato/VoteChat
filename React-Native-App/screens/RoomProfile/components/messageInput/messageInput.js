@@ -7,7 +7,7 @@ import { API_URL } from '../../../../constants'
 const socket = io.connect(API_URL)
 
 const MessageInput = (props) => {  
-    const { user } = useContext(AuthContext)
+    const { token } = useContext(AuthContext)
     const [message, setMessage] = useState('')
 
       // Envia a mensagem para o servidor
@@ -15,15 +15,13 @@ const MessageInput = (props) => {
     if (message !== '') {
       const messageData = {
         id_sala: props.data._id,
-        token: user,
+        token: token,
         message: message,
       };
       socket.emit('message', messageData);
     }
     setMessage('') // Limpa a mensagem após o envio
   }
-    
-    
     
     return (
     <>

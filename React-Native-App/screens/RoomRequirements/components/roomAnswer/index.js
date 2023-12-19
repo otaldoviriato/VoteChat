@@ -11,7 +11,7 @@ export default function roomAnswer(props) {
     const [answer, setAnswer] = useState('')
 
     const request = async () => {
-        const url = API_URL + "api/roomDetailsScreenAPI/changeRoom"
+        const url = API_URL + "api/roomProfileScreenAPI/changeRoom"
         const headers = {
             headers: {
                 "Content-Type": "application/json",
