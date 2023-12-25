@@ -11,8 +11,6 @@ export async function POST(req) {
         //Conecta ao MongoDB
         await connectMongoDB()
 
-        console.log("recebido")
-
         //Acessa os dados do corpo da requisição
         const { name } = await req.json()
 
