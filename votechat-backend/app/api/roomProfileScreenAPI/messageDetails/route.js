@@ -36,7 +36,7 @@ export async function POST(req) {
     }
 
     // Devolve as informações como resposta da requisição
-    return NextResponse.json( roomDetails );
+    return NextResponse.json( {roomDetails, id_user} );
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: error, success: false });

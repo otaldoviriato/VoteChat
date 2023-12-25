@@ -61,6 +61,12 @@ app.prepare().then(() => {
         // Emitir a mensagem para todos os clientes na sala
         io.to(id_sala).emit('message', mensagemToUsers);
 
+        // Obtém informações sobre os sockets na sala
+        const socketsInRoom = io.in(id_sala).sockets;
+
+        // Exibe os IDs dos sockets na sala
+        console.log(`Sockets na sala ${id_sala}:`, socketsInRoom ? Object.keys(socketsInRoom) : [])
+
       } catch (error) {
         console.error('Erro ao salvar mensagem:', error);
       }
