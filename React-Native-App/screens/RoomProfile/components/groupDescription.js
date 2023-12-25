@@ -3,14 +3,16 @@ import { View, Text } from 'react-native'
 import { groupProfileInfos, groupProfileView, groupProfileViewInfo, groupProfileViewName } from '../../../styles';
 
 export default function profilePicture({ data }) {
-    const updatedAtDate = new Date(data.description.updatedAt)
+    let dataFormatada = 'N/A'; // Valor padrão para caso updatedAt seja nulo
 
-    const dia = updatedAtDate.getDate()
-    const mes = updatedAtDate.getMonth() + 1
-    const ano = updatedAtDate.getFullYear()
-
-    const dataFormatada = `${dia}/${mes}/${ano}`
-
+    if (data.description && data.description.updatedAt) {
+        const updatedAtDate = new Date(data.description.updatedAt);
+        const dia = updatedAtDate.getDate();
+        const mes = updatedAtDate.getMonth() + 1;
+        const ano = updatedAtDate.getFullYear();
+        dataFormatada = `${dia}/${mes}/${ano}`;
+    }
+    
     return (
         <View style={groupProfileView}>
             <View style={{ flexDirection: "row", alignItems: 'center' }}>

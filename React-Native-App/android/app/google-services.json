@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "409385527020",
+    "project_id": "votechat-17f44",
+    "storage_bucket": "votechat-17f44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409385527020:android:b6712ab680690eda1f27c9",
+        "android_client_info": {
+          "package_name": "com.votechat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpb5uS-vjVe5UZ4tJmAaQUV1uKYWF2xFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
