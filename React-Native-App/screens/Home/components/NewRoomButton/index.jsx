@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../../../context/authContext'
 import { View, StyleSheet, TouchableOpacity, Modal, TextInput, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -8,15 +7,7 @@ import { API_URL } from '../../../../constants';
 import storeAndSetToken from '../../../../commom/utils/functions/storeAndSetToken'
 
 export default function NewRoomButton() {
-  const [modalVisible, setModalVisible] = useState(false)
-  const [roomName, setRoomName] = useState('')
-  const [roomDescription, setRoomDescription] = useState('')
-  const [error, setError] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const { setRoomData, token, setToken } = useContext(AuthContext)
-
-  const navigation = useNavigation()
+  const { setRoomData, token, setToken, user } = useContext(AuthContext)
 
   const request = async () => {    
     const url = API_URL+"api/homeScreenAPI/createRoom"
@@ -28,14 +19,12 @@ export default function NewRoomButton() {
       }
     }
     const body = {
-      roomName,
-      roomDescription,
+      name : user.name,
     }
 
     await axios.post(url, body, headers)
       .then(async (res) => {
-        closeModal()
-        console.log("Sala "+roomName+" criada com sucesso!")
+        console.log("Sala criada com sucesso!")
 
         if(!token){storeAndSetToken(res.data.token, setToken)}        
         
@@ -43,82 +32,16 @@ export default function NewRoomButton() {
       }).catch((err) => console.error('Error creating room:', err))
   }
 
-  function goToNextPage() {
-    if (!roomName) {
-      setError('Preencha todos os campos');
-      return;
-    }
-    setCurrentPage(currentPage + 1);
-    setError('')
-  }
 
-  function closeModal() {
-    setModalVisible(false);
-    setRoomName('');
-    setRoomDescription('');
-  }
 
-  function openModal() {
-    setCurrentPage(1);
-    setModalVisible(true)
-  }
 
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity onPress={openModal} style={styles.button}>
+        <TouchableOpacity onPress={request} style={styles.button}>
           <AntDesign name="plus" size={42} color="white" />
         </TouchableOpacity>
       </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {currentPage === 1 && (
-              <>
-                <Text>Qual o nome da sala ?</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nome da Sala"
-                  onChangeText={(text) => setRoomName(text)}
-                  value={roomName}
-                />
-                <TouchableOpacity onPress={goToNextPage}>
-                  <Text>Próxima</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={closeModal}>
-                  <Text>Cancelar</Text>
-                </TouchableOpacity>
-                <Text>{error}</Text>
-              </>
-            )}
-            {currentPage === 2 && (
-              <>
-                <Text>Agora explique quais coisas são relevantes para que um novo integrante seja aceito na sala (opcional):</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Requisitos para entrar na sala"
-                  onChangeText={(text) => setRoomDescription(text)}
-                  value={roomDescription}
-                />
-                <TouchableOpacity onPress={closeModal}>
-                  <Text>Cancelar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={request}>
-                  <Text>Criar Sala</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        </View>
-      </Modal>
     </>
   )
 }
@@ -132,32 +55,12 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     right: 30,
-    bottom: 100,
+    bottom: 30,
     width: 75,
     height: 75,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#295B80',
     borderRadius: 100,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 5,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    marginTop: 10,
-    padding: 10,
-  },
+  }
 });

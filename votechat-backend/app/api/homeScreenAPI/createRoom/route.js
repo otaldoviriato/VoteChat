@@ -11,11 +11,13 @@ export async function POST(req) {
         //Conecta ao MongoDB
         await connectMongoDB()
 
+        console.log("recebido")
+
         //Acessa os dados do corpo da requisição
-        const { roomName, roomDescription } = await req.json()
+        const { name } = await req.json()
 
         //Cria o dado no MongoDB
-        const createdRoom = await Salas.create({ name: roomName, description: roomDescription, members: { id_user: id_user } })
+        const createdRoom = await Salas.create({ name: "Novo Grupo", description: "Novo grupo criado por "+name, members: { id_user: id_user } })
 
         //Devolve as informações como resposta da requisição
         return NextResponse.json({ roomData: createdRoom, token: token, status: 200 })
