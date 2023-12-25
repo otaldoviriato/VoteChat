@@ -7,7 +7,7 @@ import { API_URL } from '../../../../constants';
 import storeAndSetToken from '../../../../commom/utils/functions/storeAndSetToken'
 
 export default function NewRoomButton() {
-  const { setRoomData, token, setToken, user } = useContext(AuthContext)
+  const { setRoomData, roomData, token, setToken, user } = useContext(AuthContext)
 
   const request = async () => {    
     const url = API_URL+"api/homeScreenAPI/createRoom"
@@ -20,6 +20,7 @@ export default function NewRoomButton() {
     }
     const body = {
       name : user.name,
+      salasCount: roomData.length,
     }
 
     await axios.post(url, body, headers)
@@ -31,9 +32,6 @@ export default function NewRoomButton() {
         setRoomData(prevRoomData => [...prevRoomData, res.data.roomData])
       }).catch((err) => console.error('Error creating room:', err))
   }
-
-
-
 
   return (
     <>
