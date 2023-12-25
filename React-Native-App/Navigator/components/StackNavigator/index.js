@@ -1,19 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image, Button, Text, Touchable } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AntDesign, Fontisto } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 // Import das screens
 import Home from '../../../screens/Home'
-import RoomProfileScreen from '../../../screens/RoomProfile'
+import RoomHomeScreen from '../../../screens/RoomHome'
+import RoomProfile from '../../../screens/RoomProfile'
 import ListVotationsScreen from '../../../screens/Votations'
 import RoomRequirementsScreen from '../../../screens/RoomRequirements'
 import UserProfile from '../../../screens/UserProfile'
 import MenuHome from '../../../screens/Home/components/MenuButton'
 import MenuRoom from '../../../screens/RoomDetails/components/menuButton'
+import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
 
 const Stack = createNativeStackNavigator()
 
 const StackNavigator = () => {
+  const navigation = useNavigation()
+
   return (
     <Stack.Navigator>
       <Stack.Screen name="ListaDeSalas" component={Home} options={{
@@ -34,14 +40,9 @@ const StackNavigator = () => {
             </View>
           </View>
         ),
-        headerLeft: () => (
-          <View style={{ marginRight: 40 }}>
-
-          </View>
-        ),
       }} />
-      <Stack.Screen name="DetalhesDaSala" component={RoomProfileScreen} options={({ route }) => ({
-        title: 'Vote Chat',
+      <Stack.Screen name="HomeDaSala" component={RoomHomeScreen} options={({ route }) => ({
+        title: '',
         headerStyle: {
           backgroundColor: '#295B80',
         },
@@ -56,11 +57,25 @@ const StackNavigator = () => {
             </MenuRoom>
           </View>
         ),
+        headerLeft: () => (
+          <>
+            <Fontisto name="arrow-left" size={18} color="white" onPress={() => navigation.navigate('ListaDeSalas')} />
+            <GestureHandlerRootView>
+              <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }} onPress={() => navigation.navigate('PerfilDoGrupo', route )}>
+                <Image
+                  style={{ width: 40, height: 40, borderRadius: 20, marginLeft: 20, marginRight: 10 }}
+                  source={require('../../../assets/default-group.jpg')}
+                />
+                <Text>{route.params.data.name}</Text>
+              </TouchableOpacity>
+            </GestureHandlerRootView>
+          </>
+        ),
       })} />
       <Stack.Screen name="ListaDeVotações" component={ListVotationsScreen} options={{ title: 'Votações Pendentes' }} />
       <Stack.Screen name="RequisitosDaSala" component={RoomRequirementsScreen} options={{ title: 'Requisitos para entrar na Sala' }} />
       <Stack.Screen name="PerfilDoUsuario" component={UserProfile} options={{ title: 'Perfil' }} />
-      {/* Adicione outras telas que deseja navegar aqui, se necessário */}
+      <Stack.Screen name="PerfilDoGrupo" component={RoomProfile} options={{ title: 'Dados do Grupo' }} />
     </Stack.Navigator>
   )
 }

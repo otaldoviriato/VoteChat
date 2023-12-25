@@ -29,10 +29,18 @@ const votationsSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+const descriptionSchema = new mongoose.Schema(
+  {
+    text: { type: String, required: false },
+  },
+  { timestamps: true }
+)
+
 const salaSchema = new Schema(
   {
     name: { type: String, required: true },
-    description: {type: String, required: false},
+    description: descriptionSchema,
+    profilePicture: { type: String, required: false, },
     members: [
       {
         id_user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -44,5 +52,5 @@ const salaSchema = new Schema(
   { timestamps: true }
 )
 
-const Salas = models.Salas || mongoose.model('Salas', salaSchema);
-module.exports = Salas;
+const Salas = models.Salas || mongoose.model('Salas', salaSchema)
+module.exports = Salas

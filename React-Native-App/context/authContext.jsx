@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
         
       }
     fetchUser();
-  }, []); 
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser, roomData, setRoomData, token, setToken }}>
