@@ -20,7 +20,7 @@ export default function profilePicture({ data }) {
                 <Text style={groupProfileViewInfo}>Atualizado em {dataFormatada}</Text>
             </View>
             <View style={{ flexDirection: "row", justifyContent: 'space-between', width: '100%' }}>
-                <Text style={groupProfileInfos}>{data.description ? data.description : 'O grupo ainda não tem uma descrição, adicione uma para que ela apareça aqui!'}</Text>
+                <Text style={groupProfileInfos}>{data.description ? data.description : 'O grupo ainda não tem uma descrição'}</Text>
             </View>
         </View>
     )

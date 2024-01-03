@@ -4,7 +4,7 @@ import { AuthContext } from '../../../../context/authContext';
 import { API_URL } from '../../../../constants'
 import axios from "axios"
 
-export default function VoteButton({ id_sala, id_votado }) {
+export default function VoteButton({ id_sala, id_votacao }) {
   const { token } = useContext(AuthContext)
 
   const request = async (voto) => {
@@ -18,7 +18,7 @@ export default function VoteButton({ id_sala, id_votado }) {
     }
     const body = {
       id_sala: id_sala,
-      id_votado: id_votado,
+      id_votacao: id_votacao,
       voto: voto
     }
 
